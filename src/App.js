@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 
 import Layout from "./components/Layout";
+import Builder from "./containers/Builder";
 
 function App() {
   return (
     <div className="App">
       <Layout>
-          Builder
+          <Builder />
       </Layout>
     </div>
   );
