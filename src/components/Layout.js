@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Layout = props => {
     return(
@@ -11,6 +12,10 @@ const Layout = props => {
             </main>
         </>
     );
+};
+
+Layout.propTypes = {
+    children: PropTypes.element.isRequired
 };
 
 export default Layout;
