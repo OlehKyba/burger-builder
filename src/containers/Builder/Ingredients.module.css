@@ -4,7 +4,7 @@
     background: linear-gradient(#F08E4A, #e27b36);
     border-radius: 0 0 30px 30px;
     box-shadow: inset -15px 0 #c15711;
-    margin: 2% auto;
+    margin: 1% auto;
 }
 
 .BreadTop {
@@ -13,95 +13,80 @@
     background: linear-gradient(#bc581e, #e27b36);
     border-radius: 50% 50% 0 0;
     box-shadow: inset -15px 0 #c15711;
-    margin: 2% auto;
+    margin: 1% auto;
     position: relative;
 }
 
-.Seeds1 {
-    width: 10%;
-    height: 15%;
-    position: absolute;
-    background-color: white;
-    left: 30%;
-    top: 50%;
-    border-radius: 40%;
-    transform: rotate(-20deg);
-    box-shadow: inset -2px -3px #c9c9c9;
-}
-
-.Seeds1:after {
-    content: "";
+.Seeds {
     width: 100%;
     height: 100%;
-    position: absolute;
-    background-color: white;
-    left: -170%;
-    top: -260%;
-    border-radius: 40%;
-    transform: rotate(60deg);
-    box-shadow: inset -1px 2px #c9c9c9;
-}
-
-.Seeds1:before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: white;
-    left: 180%;
-    top: -50%;
-    border-radius: 40%;
-    transform: rotate(60deg);
-    box-shadow: inset -1px -3px #c9c9c9;
-}
-
-.Seeds2 {
-    width: 10%;
-    height: 15%;
-    position: absolute;
-    background-color: white;
-    left: 64%;
-    top: 50%;
-    border-radius: 40%;
-    transform: rotate(10deg);
-    box-shadow: inset -3px 0 #c9c9c9;
-}
-
-.Seeds2:before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: white;
-    left: 150%;
-    top: -130%;
-    border-radius: 40%;
-    transform: rotate(90deg);
-    box-shadow: inset 1px 3px #c9c9c9;
+    background-image: radial-gradient(#f3d9b1 5%, transparent 6%),
+                      radial-gradient(#f3d9b1 5%, transparent 6%);
+    background-size: 50px, 50px;
+    background-position: 7px -5px, 30px 20px;
 }
 
 
 .Meat {
     width: 80%;
     height: 8%;
-    background: linear-gradient(#7f3608, #702e05);
-    margin: 2% auto;
+    background: linear-gradient(#7f3608, #492f16);
+    margin: 1% auto;
     border-radius: 15px;
 }
 
+.Tomato {
+    width: 80%;
+    height: 7%;
+    margin: 1% auto;
+    background: linear-gradient(to bottom, #FF6347 0%, #F05438 100%);
+    border: 1px solid #E14529;
+    box-shadow: inset 0 1px 0 #FF7256;
+    border-radius: 20px;
+}
+
 .Cheese {
+    display: flex;
     width: 90%;
     height: 4.5%;
-    margin: 2% auto;
-    background: linear-gradient(#f4d004, #d6bb22);
+    margin: 1% auto;
+    background: linear-gradient(#eaf600, #d6bb22);
     border-radius: 20px;
+}
+
+.Cheese::before{
+    display: block;
+    content: "";
+    transform-origin: top;
+    animation: cheese-melt 3s ease-in-out infinite;
+    position: relative;
+    left: 70%;
+    width: 5%;
+    height: 250%;
+    background-color: #eaf600;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.Cheese::after{
+    display: block;
+    content: "";
+    transform-origin: top;
+    animation: cheese-melt 3s ease-out infinite;
+    position: relative;
+    left: 40%;
+    width: 3%;
+    height: 200%;
+    background-color: #eaf600;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .Salad {
     width: 85%;
     height: 7%;
-    margin: 2% auto;
-    background: linear-gradient(#228c1d, #91ce50);
+    margin: 1% auto;
+    background: linear-gradient(#228c1d, #88b538);
     border-radius: 20px;
 }
 
@@ -109,5 +94,46 @@
     width: 80%;
     height: 3%;
     background: linear-gradient(#bf3813, #c45e38);
-    margin: 2% auto;
+    margin: 1% auto;
+}
+
+.Onion {
+    width: 85%;
+    height: 7%;
+    background: #822e81;
+    border-radius: 50px;
+    margin: 1% auto;
+}
+
+.Onion::before {
+    content: "";
+    display: inherit;
+    position: relative;
+    width: 10%;
+    height: 100%;
+    left: 50%;
+    background: #fff;
+    opacity: 0.4;
+}
+
+.Onion::after {
+    content: "";
+    display: inherit;
+    position: relative;
+    width: 8%;
+    height: 100%;
+    top: -100%;
+    left: 20%;
+    background: #fff;
+    opacity: 0.4;
+}
+
+
+@keyframes cheese-melt {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
 }

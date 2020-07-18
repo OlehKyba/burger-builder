@@ -5,16 +5,9 @@ import classes from './Ingredients.module.css';
 
 const Ingredient = props => {
 
-    const seeds = (
-        <>
-            <div className={classes.Seeds1}></div>
-            <div className={classes.Seeds2}></div>
-        </>
-    );
-
     return (
         <div className={classes[props.type]}>
-            {props.type === 'BreadTop' ? seeds : null}
+            {props.type === 'BreadTop' && <div className={classes.Seeds}></div>}
         </div>
     );
 };
@@ -27,6 +20,8 @@ Ingredient.propTypes = {
             'Cheese',
             'Salad',
             'Bacon',
+            'Onion',
+            'Tomato',
         ]
     ),
 };

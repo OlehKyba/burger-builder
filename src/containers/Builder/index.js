@@ -17,9 +17,11 @@ class Builder extends Component{
                     <Ingredient type={'BreadTop'} />
                     <Ingredient type={'Salad'} />
                     <Ingredient type={'Cheese'} />
+                    <Ingredient type={'Bacon'} />
+                    <Ingredient type={'Onion'} />
+                    <Ingredient type={'Tomato'} />
                     <Ingredient type={'Meat'} />
                     <Ingredient type={'BreadBottom'} />
-
                 </div>
                 <div>
                     Control elements
