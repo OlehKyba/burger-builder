@@ -8,3 +8,9 @@ body {
   box-sizing: border-box;
   background: #f3d9b1;
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

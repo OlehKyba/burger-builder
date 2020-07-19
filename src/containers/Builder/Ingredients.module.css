@@ -39,10 +39,23 @@
     width: 80%;
     height: 7%;
     margin: 1% auto;
-    background: linear-gradient(to bottom, #FF6347 0%, #F05438 100%);
+    background: #E1332D;
     border: 1px solid #E14529;
     box-shadow: inset 0 1px 0 #FF7256;
     border-radius: 20px;
+}
+
+.Tomato::after {
+    display: block;
+    background: #fff;
+    content: "";
+    position: relative;
+    opacity: 0.4;
+    width: 7%;
+    height: 100%;
+    transform: skewX(25deg);
+    left: 85%;
+    animation: tomato-shine 2s infinite;
 }
 
 .Cheese {
@@ -135,5 +148,14 @@
     }
     to {
         transform: scaleY(1);
+    }
+}
+
+@keyframes tomato-shine {
+    from {
+        left: 5%;
+    }
+    to {
+        left: 85%;
     }
 }

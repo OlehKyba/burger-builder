@@ -2,28 +2,22 @@ import React, {Component} from "react";
 import classes from './Builder.module.css';
 
 import Ingredient from "./Ingredient";
+import Controller from "./Controller";
 
 class Builder extends Component{
 
     state = {
-        ingredients: [
-            {id: 'Salad_1', menuName: 'salad'},
-            {id: 'Cheese_1', menuName: 'cheese'},
-            {id: 'Bacon_1', menuName: 'bacon'},
-            {id: 'Onion_1', menuName: 'onion'},
-            {id: 'Tomato_1', menuName: 'tomato'},
-            {id: 'Meat_1', menuName: 'meat'},
-        ],
+        ingredients: [],
 
         menu: {
             breadTop: {price: 0.1, count: 1, type:'BreadTop', canAdd: false, canRemove: false},
             breadBottom: {price: 0.1, count: 1, type:'BreadBottom', canAdd: false, canRemove: false},
-            salad: {price: 0.2, count: 1, type: 'Salad', canAdd: true, canRemove: true},
-            cheese: {price: 0.3, count: 1, type: 'Cheese', canAdd: true, canRemove: true},
-            bacon: {price: 0.45, count: 1, type: 'Bacon', canAdd: true, canRemove: true},
-            onion: {price: 0.25, count: 1, type: 'Onion', canAdd: true, canRemove: true},
-            tomato: {price: 0.35, count: 1, type: 'Tomato', canAdd: true, canRemove: true},
-            meat: {price: 0.75, count: 1, type: 'Meat', canAdd: true, canRemove: true},
+            salad: {price: 0.2, count: 0, type: 'Salad', canAdd: true, canRemove: false},
+            cheese: {price: 0.3, count: 0, type: 'Cheese', canAdd: true, canRemove: false},
+            bacon: {price: 0.45, count: 0, type: 'Bacon', canAdd: true, canRemove: false},
+            onion: {price: 0.25, count: 0, type: 'Onion', canAdd: true, canRemove: false},
+            tomato: {price: 0.35, count: 0, type: 'Tomato', canAdd: true, canRemove: false},
+            meat: {price: 0.75, count: 0, type: 'Meat', canAdd: true, canRemove: false},
         },
 
         price: 0.2,
@@ -44,11 +38,12 @@ class Builder extends Component{
         const ingredientData = {...this.state.menu[menuName]};
         if (ingredientData.canAdd) {
             ingredientData.count++;
+            ingredientData.canRemove = ingredientData.count > 0;
             const price = this.state.price + ingredientData.price;
             const ingredient = {menuName, id: this.getIngredientId(ingredientData)};
             this.setState({
                 menu: {...this.state.menu, [menuName]: ingredientData},
-                ingredient: [...this.state.ingredients, ingredient],
+                ingredients: [...this.state.ingredients, ingredient],
                 price,
             });
         }
@@ -79,8 +74,8 @@ class Builder extends Component{
             ingredientData.canRemove = ingredientData.count > 0;
             const price = this.state.price - ingredientData.price;
             const ingredients = [...this.state.ingredients];
-            const pattern = new RegExp('^', ingredientData.type);
-            const index = ingredients.findIndex(item => pattern.test(item.id));
+            const pattern = new RegExp('^' + ingredientData.type);
+            const index = ingredients.length -1 - [...ingredients].reverse().findIndex(item => pattern.test(item.id));
             ingredients.splice(index, 1);
             this.setState({
                 menu: {...this.state.menu, [menuName]: ingredientData},
@@ -96,18 +91,24 @@ class Builder extends Component{
             <>
                 <div className={classes.Builder}>
                     <Ingredient type={this.state.menu.breadTop.type} />
-                    {this.state.ingredients.map(ingredient => (
+                    {this.state.ingredients.length > 0 ?
+                        this.state.ingredients.map(ingredient => (
                         <Ingredient
                             type={this.state.menu[ingredient.menuName].type}
                             key={ingredient.id}
                             onClick={this.removeAccurateIngredient.bind(null, ingredient.id)}
                         />
-                        ))}
+                        ))
+                        : <p>Please start cooking the burger!</p>
+                    }
                     <Ingredient type={this.state.menu.breadBottom.type} />
                 </div>
-                <div>
-                    Control elements
-                </div>
+                <Controller
+                    menu={Object.keys(this.state.menu).filter(key => this.state.menu[key].canAdd)
+                        .map(key => ({...this.state.menu[key], menuName: key}))}
+                    add={this.addIngredient}
+                    remove={this.removeIngredient}
+                />
             </>
         );
     }
