@@ -1,0 +1,19 @@
+.Button {
+    height: 40px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+    background-color: #f6e58d;
+    transition: all .25s ease 0s;
+    box-shadow: 0 10px #f9ca24;
+    border: none;
+    outline: none;
+}
+
+.Button:active {
+    box-shadow: 0 5px #f0932b;
+    transform: translateY(5px);
+}
