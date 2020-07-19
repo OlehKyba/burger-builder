@@ -8,6 +8,7 @@ import ControllerRow from "./ControllerRow";
 const Controller = props => {
     return (
         <div className={classes.Container}>
+            <p>Current price: <strong>{props.price.toFixed(3)}</strong></p>
             {props.menu.map(item => (
                 <ControllerRow
                     key={item.type}
@@ -21,6 +22,7 @@ const Controller = props => {
 };
 
 Controller.propTypes = {
+    price: PropTypes.number,
     menu: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         count: PropTypes.number,

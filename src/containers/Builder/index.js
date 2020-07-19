@@ -104,6 +104,7 @@ class Builder extends Component{
                     <Ingredient type={this.state.menu.breadBottom.type} />
                 </div>
                 <Controller
+                    price={this.state.price}
                     menu={Object.keys(this.state.menu).filter(key => this.state.menu[key].canAdd)
                         .map(key => ({...this.state.menu[key], menuName: key}))}
                     add={this.addIngredient}
