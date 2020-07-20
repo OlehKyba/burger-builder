@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import classes from './Builder.module.css';
 
-import Ingredient from "./Ingredient";
 import Controller from "./Controller";
+import Dish from "./Dish";
 
 class Builder extends Component{
 
@@ -89,20 +88,11 @@ class Builder extends Component{
     render() {
         return (
             <>
-                <div className={classes.Builder}>
-                    <Ingredient type={this.state.menu.breadTop.type} />
-                    {this.state.ingredients.length > 0 ?
-                        this.state.ingredients.map(ingredient => (
-                        <Ingredient
-                            type={this.state.menu[ingredient.menuName].type}
-                            key={ingredient.id}
-                            onClick={this.removeAccurateIngredient.bind(null, ingredient.id)}
-                        />
-                        ))
-                        : <p>Please start cooking the burger!</p>
-                    }
-                    <Ingredient type={this.state.menu.breadBottom.type} />
-                </div>
+                <Dish
+                    ingredients={this.state.ingredients}
+                    menu={this.state.menu}
+                    onIngredientClick={this.removeAccurateIngredient}
+                />
                 <Controller
                     price={this.state.price}
                     menu={Object.keys(this.state.menu).filter(key => this.state.menu[key].canAdd)

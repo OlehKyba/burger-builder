@@ -19,7 +19,7 @@ const Controller = props => {
                     canRemove={item.canRemove}
                 />))
             }
-            <Button width={'100px'}>Ready!</Button>
+            <Button width={'100px'} disabled={!props.menu.some(item => item.count > 0)}>Ready!</Button>
         </div>);
 };
 
