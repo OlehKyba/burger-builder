@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import classes from "./Controller.module.css";
 
 import ControllerRow from "./ControllerRow";
+import Button from "../../../UI/Button";
 
 const Controller = props => {
     return (
@@ -18,6 +19,7 @@ const Controller = props => {
                     canRemove={item.canRemove}
                 />))
             }
+            <Button width={'100px'}>Ready!</Button>
         </div>);
 };
 

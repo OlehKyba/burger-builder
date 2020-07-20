@@ -3,9 +3,14 @@
     background-color: #cf8f2e;
     display: flex;
     flex-flow: column;
-    align-content: space-around;
+    align-content: space-between;
     align-items: center;
     box-shadow: 0 2px 1px #ccc;
     margin: auto;
     padding: 1rem 0;
+    gap: 0.5rem;
+}
+
+p {
+    margin: 0;
 }

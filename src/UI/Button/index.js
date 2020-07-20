@@ -5,14 +5,15 @@ import classes from "./Button.module.css";
 
 
 const Button = props => {
-  return (
-      <button
-          {...props}
-          className={classes.Button}
-          style={{width: props.width}}
-      >
-          {props.children}
-      </button>
+    const {width, ...other} = props;
+    return (
+        <button
+            {...other}
+            className={classes.Button}
+            style={{width: props.width}}
+        >
+            {props.children}
+        </button>
   );
 };
 
