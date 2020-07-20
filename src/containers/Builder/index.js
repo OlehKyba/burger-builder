@@ -2,6 +2,8 @@ import React, {Component} from "react";
 
 import Controller from "./Controller";
 import Dish from "./Dish";
+import OrderSummary from "./OrderSummary";
+import Modal from "../../UI/Modal";
 
 class Builder extends Component{
 
@@ -20,7 +22,22 @@ class Builder extends Component{
         },
 
         price: 0.2,
+        isShowSummary: false,
     }
+
+    checkoutHandler = () => {
+      alert("Checkout success!");
+      this.setState({isShowSummary: false});
+    };
+
+    checkoutCancelHandler = () => {
+        this.setState({isShowSummary: false});
+    };
+
+    openCheckoutModal = () => {
+        this.setState({isShowSummary: true});
+    };
+
 
     getIngredientId = menuItem => {
         const {type} = menuItem;
@@ -86,8 +103,16 @@ class Builder extends Component{
 
 
     render() {
+        const menuArray = Object.keys(this.state.menu).map(key => ({...this.state.menu[key], menuName: key}));
         return (
             <>
+                <Modal
+                    isShow={this.state.isShowSummary}
+                    onSubmit={this.checkoutHandler}
+                    onCancel={this.checkoutCancelHandler}
+                >
+                    <OrderSummary menu={menuArray}/>
+                </Modal>
                 <Dish
                     ingredients={this.state.ingredients}
                     menu={this.state.menu}
@@ -95,10 +120,10 @@ class Builder extends Component{
                 />
                 <Controller
                     price={this.state.price}
-                    menu={Object.keys(this.state.menu).filter(key => this.state.menu[key].canAdd)
-                        .map(key => ({...this.state.menu[key], menuName: key}))}
+                    menu={menuArray.filter(item => item.canAdd)}
                     add={this.addIngredient}
                     remove={this.removeIngredient}
+                    onCheckout={this.openCheckoutModal}
                 />
             </>
         );

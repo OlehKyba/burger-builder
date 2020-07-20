@@ -19,7 +19,13 @@ const Controller = props => {
                     canRemove={item.canRemove}
                 />))
             }
-            <Button width={'100px'} disabled={!props.menu.some(item => item.count > 0)}>Ready!</Button>
+            <Button
+                onClick={props.onCheckout}
+                width={'100px'}
+                disabled={!props.menu.some(item => item.count > 0)}
+            >
+                Ready!
+            </Button>
         </div>);
 };
 
@@ -34,6 +40,7 @@ Controller.propTypes = {
 
     add: PropTypes.func,
     remove: PropTypes.func,
+    onCheckout: PropTypes.func,
 };
 
 export default Controller;

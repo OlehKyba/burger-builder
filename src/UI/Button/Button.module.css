@@ -18,3 +18,13 @@
     box-shadow: 0 5px #f0932b;
     transform: translateY(5px);
 }
+
+.Button .Invert {
+    background-color: #FF6347;
+    box-shadow: 0 10px #D9391C;
+}
+
+.Button .Invert:active {
+    box-shadow: 0 5px #B21B00;
+    transform: translateY(5px);
+}
