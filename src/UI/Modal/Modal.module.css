@@ -1,5 +1,6 @@
 .Modal {
     position: fixed;
+    animation: show-modal 0.25s 1;
     z-index: 500;
     width: 80%;
     box-sizing: border-box;
@@ -65,5 +66,14 @@
     .Modal {
         width: 500px;
         left: calc(50% - 250px);
+    }
+}
+
+@keyframes show-modal {
+    from{
+        top: -100%;
+    }
+    to{
+        top: 20%;
     }
 }

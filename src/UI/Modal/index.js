@@ -31,7 +31,7 @@ class Modal extends Component {
                 </div>
                 <div className={classes.Buttons}>
                     <Button width={'60px'} onClick={this.props.onSubmit}>Yes</Button>
-                    <Button width={'60px'} onClick={this.props.onCancel}>No</Button>
+                    <Button width={'60px'} onClick={this.props.onCancel} invert>No</Button>
                 </div>
                 <div className={[classes.Holes, classes.HoleTop].join(" ")}></div>
                 <div className={[classes.Holes, classes.HoleMiddle].join(" ")}></div>
