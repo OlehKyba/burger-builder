@@ -27,3 +27,14 @@
     border-bottom: 4px lightskyblue solid;
 }
 
+@media (max-width: 768px) {
+    .NavItem {
+        height: 3rem;
+        width: 100%;
+    }
+
+    .NavItem a{
+        width: 100%;
+    }
+}
+

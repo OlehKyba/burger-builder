@@ -6,3 +6,25 @@
     align-items: center;
     list-style: none;
 }
+
+@media (max-width: 768px) {
+    .RightNav {
+        align-self: flex-start;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: #703b09;
+        height: 100vh;
+        max-width: 70%;
+        min-width: 30%;
+        padding: 56px 0 0 0;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .Open {
+        transform: translateX(0);
+    }
+
+    .Close {
+        transform: translateX(110%);
+    }
+}

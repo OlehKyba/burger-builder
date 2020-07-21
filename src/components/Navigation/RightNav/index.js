@@ -3,21 +3,25 @@ import PropTypes from "prop-types";
 
 import classes from "./RightNav.module.css";
 
-import NavItem from "../NavItem";
-
 const RightNav = props => {
+    const ulClasses = [classes.RightNav, props.isOpen ? classes.Open : classes.Close];
     return (
-        <ul className={classes.RightNav}>
+        <ul className={ulClasses.join(" ")}>
             {props.children}
         </ul>
     );
 }
 
 RightNav.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.objectOf(NavItem),
-        PropTypes.arrayOf(PropTypes.objectOf(NavItem)),
-    ]),
+    isOpen: PropTypes.bool,
+    children: PropTypes.arrayOf(PropTypes.oneOfType([
+       PropTypes.element,
+       PropTypes.arrayOf(PropTypes.element),
+    ])),
+};
+
+RightNav.defaultProps = {
+    isOpen: false,
 };
 
 export default RightNav;
