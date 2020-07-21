@@ -1,0 +1,29 @@
+.NavItem {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.NavItem a {
+    box-sizing: border-box;
+    color: lightgoldenrodyellow;
+    text-decoration: none;
+    height: 100%;
+    border-bottom: transparent solid 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.NavItem a:hover,
+.NavItem a:active,
+.NavItem a.Active{
+    background-color: #8f5c2c;
+}
+
+.NavItem a.Active {
+    border-bottom: 4px lightskyblue solid;
+}
+

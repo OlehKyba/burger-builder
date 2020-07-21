@@ -103,7 +103,9 @@ class Builder extends Component{
 
 
     render() {
-        const menuArray = Object.keys(this.state.menu).map(key => ({...this.state.menu[key], menuName: key}));
+        const menuArray = Object.keys(this.state.menu)
+            .filter(key => this.state.menu[key].canAdd)
+            .map(key => ({...this.state.menu[key], menuName: key}));
         return (
             <>
                 <Modal
@@ -120,7 +122,7 @@ class Builder extends Component{
                 />
                 <Controller
                     price={this.state.price}
-                    menu={menuArray.filter(item => item.canAdd)}
+                    menu={menuArray}
                     add={this.addIngredient}
                     remove={this.removeIngredient}
                     onCheckout={this.openCheckoutModal}
