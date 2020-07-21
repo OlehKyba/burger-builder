@@ -3,22 +3,15 @@
     animation: show-modal 0.25s 1;
     z-index: 500;
     width: 80%;
+    max-height: 70%;
     box-sizing: border-box;
-    left: 15%;
+    left: 10%;
     top: 20%;
     box-shadow: 0 0 5px 0 #888;
-    background-image: repeating-linear-gradient(white 0px, white 24px, steelblue 25px);
+    background-image: linear-gradient(90deg, transparent 0px, transparent 45px, rgba(255,0,0,0.5) 47px, transparent 49px),
+                      repeating-linear-gradient(white 0px, white 24px, steelblue 25px);
     padding-left: 50px;
     overflow: auto;
-}
-
-.Modal::before {
-    content: '';
-    position: absolute;
-    left: 45px;
-    height: 100%;
-    width: 2px;
-    background: rgba(255,0,0,0.4);
 }
 
 .Text {
@@ -29,25 +22,6 @@
     align-items: flex-start;
     line-height: 25px;
     font-family: 'Indie Flower';
-}
-
-.Holes {
-    position: absolute;
-    left: 10px;
-    height: 25px;
-    width: 25px;
-    background: lightgoldenrodyellow;
-    border-radius: 50%;
-    box-shadow: inset 0 0 2px 0 #888;
-}
-.HoleTop {
-    top: 10%;
-}
-.HoleMiddle {
-    top: 50%;
-}
-.HoleBottom {
-    bottom: 10%;
 }
 
 .Title {
