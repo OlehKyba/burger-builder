@@ -24,6 +24,10 @@ class Modal extends Component {
         modalRoot.removeChild(this.el);
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextProps.isShow !== this.props.isShow;
+    }
+
     render() {
         const modal = (
             this.props.isShow &&
