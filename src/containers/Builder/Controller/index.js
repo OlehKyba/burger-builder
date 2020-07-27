@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classes from "./Controller.module.css";
 
 import ControllerRow from "./ControllerRow";
-import Button from "../../../UI/Button";
+import Button from "../../../components/UI/Button";
 
 const Controller = props => {
     return (

@@ -6,7 +6,7 @@ import classes from "./Nav.module.css";
 import RightNav from "../RightNav";
 import NavItem from "../NavItem";
 import BurgerIcon from "../BurgerIcon";
-import Backdrop from "../../../UI/Backdrop";
+import Backdrop from "../../UI/Backdrop";
 
 const Nav = props => {
     return (

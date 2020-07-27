@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import Controller from "./Controller";
 import Dish from "./Dish";
 import OrderSummary from "./OrderSummary";
-import Modal from "../../UI/Modal";
+import Modal from "../../components/UI/Modal";
 
 class Builder extends Component{
 
