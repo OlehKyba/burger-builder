@@ -13,7 +13,8 @@ const Controller = props => {
             {props.menu.map(item => (
                 <ControllerRow
                     key={item.type}
-                    label={`${item.type} × ${item.count}`}
+                    label={item.type}
+                    count={item.count}
                     add={props.add.bind(null, item.menuName)}
                     remove={props.remove.bind(null, item.menuName)}
                     canRemove={item.canRemove}

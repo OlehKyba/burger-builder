@@ -2,13 +2,16 @@ import React from "react";
 import PropTypes from "prop-types"
 
 import classes from "./ControllerRow.module.css";
+import iconsPath from "./icons";
 
 import Button from "../../../../components/UI/Button";
+import Icon from "../../../../components/UI/Icon";
 
 const ControllerRow = props => {
     return (
         <div className={classes.Row}>
-            <p className={classes.Label}>{props.label}</p>
+            <Icon src={iconsPath[props.label]} alt={props.label} width={'60px'} />
+            <p>{` × ${props.count}`}</p>
             <Button
                 width={'60px'}
                 onClick={props.add}
@@ -28,6 +31,7 @@ const ControllerRow = props => {
 
 ControllerRow.propTypes = {
     label: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
     add: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
     canRemove: PropTypes.bool,
