@@ -1,83 +1,52 @@
-.Loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    transform: translate(-50%, -50%) rotate(45deg) translate3d(0, 0, 0);
-    animation: loader 1.2s infinite ease-in-out;
-}
-
 .Disabled {
     display: none;
 }
 
-.ActiveContainer {
-    background-color: rgba(0, 0, 0, 0.5);
+.Wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-.Loader span {
+.Overlay {
     position: absolute;
-    display: block;
-    width: 40px;
-    height: 40px;
-    background-color: deepskyblue;
-    animation: loaderBlock 1.2s infinite ease-in-out both;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
 }
 
-.Loader span:nth-child(1) {
-    top: 0;
-    left: 0;
+.SpinnerWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-.Loader span:nth-child(2) {
-     top: 0;
-     right: 0;
-     animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+.Loader,
+.Loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
 }
-
-.Loader span:nth-child(3) {
-     bottom: 0;
-     left: 0;
-     animation: loaderBlockInverse 1.2s infinite ease-in-out both;
+.Loader {
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(15,255,255, 0.2);
+    border-right: 1.1em solid rgba(15,255,255, 0.2);
+    border-bottom: 1.1em solid rgba(15,255,255, 0.2);
+    border-left: 1.1em solid deepskyblue;
+    transform: translateZ(0);
+    animation: load 1.1s infinite linear;
 }
-
-.Loader span:nth-child(4) {
-     bottom: 0;
-     right: 0;
-}
-
-@keyframes loader {
-    0%, 10%, 100% {
-        width: 80px;
-        height: 80px;
-    }
-    65% {
-        width: 150px;
-        height: 150px;
-    }
-}
-@keyframes loaderBlock {
-    0%, 30% {
-        transform: rotate(0);
-    }
-    55% {
-        background-color: lightskyblue;
+@keyframes load {
+    0% {
+        transform: rotate(0deg);
     }
     100% {
-        transform: rotate(90deg);
-
-    }
-}
-@keyframes loaderBlockInverse {
-    0%, 20% {
-        transform: rotate(0);
-    }
-    55% {
-        background-color: lightskyblue;
-    }
-    100% {
-        transform: rotate(-90deg);
+        transform: rotate(360deg);
     }
 }
 

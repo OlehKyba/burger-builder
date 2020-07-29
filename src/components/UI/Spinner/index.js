@@ -4,14 +4,13 @@ import PropTypes from "prop-types";
 import classes from "./Spinner.module.css";
 
 const Spinner = props => {
-    const spinnerClass = props.isSpin ? classes.Loader : [classes.Loader, classes.Disabled].join(" ");
+
     return (
-        <div className={props.isSpin ? classes.ActiveContainer : undefined}>
-            <div className={spinnerClass}>
-                <span />
-                <span />
-                <span />
-                <span />
+        <div className={classes.Wrapper}>
+            <div className={props.isSpin ? classes.Overlay : [classes.Overlay, classes.Disabled].join(" ")}>
+                <div className={classes.SpinnerWrapper}>
+                    <div className={classes.Loader} />
+                </div>
             </div>
             {props.children}
         </div>
@@ -19,7 +18,10 @@ const Spinner = props => {
 };
 
 Spinner.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element),
+    ]),
     isSpin: PropTypes.bool,
 };
 
