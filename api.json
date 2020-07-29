@@ -1,0 +1,60 @@
+{
+  "menu": {
+    "breadTop": {
+      "price": 0.1,
+      "count": 1,
+      "type": "BreadTop",
+      "canAdd": false,
+      "canRemove": false
+    },
+    "breadBottom": {
+      "price": 0.1,
+      "count": 1,
+      "type": "BreadBottom",
+      "canAdd": false,
+      "canRemove": false
+    },
+    "salad": {
+      "price": 0.2,
+      "count": 0,
+      "type": "Salad",
+      "canAdd": true,
+      "canRemove": false
+    },
+    "cheese": {
+      "price": 0.3,
+      "count": 0,
+      "type": "Cheese",
+      "canAdd": true,
+      "canRemove": false
+    },
+    "bacon": {
+      "price": 0.45,
+      "count": 0,
+      "type": "Bacon",
+      "canAdd": true,
+      "canRemove": false
+    },
+    "onion": {
+      "price": 0.25,
+      "count": 0,
+      "type": "Onion",
+      "canAdd": true,
+      "canRemove": false
+    },
+    "tomato": {
+      "price": 0.35,
+      "count": 0,
+      "type": "Tomato",
+      "canAdd": true,
+      "canRemove": false
+    },
+    "meat": {
+      "price": 0.75,
+      "count": 0,
+      "type": "Meat",
+      "canAdd": true,
+      "canRemove": false
+    }
+  }
+}
