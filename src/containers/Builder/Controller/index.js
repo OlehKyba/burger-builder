@@ -5,29 +5,36 @@ import classes from "./Controller.module.css";
 
 import ControllerRow from "./ControllerRow";
 import Button from "../../../components/UI/Button";
+import Spinner from "../../../components/UI/Spinner";
 
 const Controller = props => {
     return (
-        <div className={classes.Container}>
-            <p>Current price: <strong>{props.price.toFixed(3)}</strong></p>
-            {props.menu.map(item => (
-                <ControllerRow
-                    key={item.type}
-                    label={item.type}
-                    count={item.count}
-                    add={props.add.bind(null, item.menuName)}
-                    remove={props.remove.bind(null, item.menuName)}
-                    canRemove={item.canRemove}
-                />))
-            }
-            <Button
-                onClick={props.onCheckout}
-                width={'100px'}
-                disabled={!props.menu.some(item => item.count > 0)}
-            >
-                Ready!
-            </Button>
-        </div>);
+        <Spinner isSpin={props.menu.length < 1}>
+            <div className={classes.Container}>
+                {props.menu.length > 0 &&
+                <>
+                    <p>Current price: <strong>{props.price.toFixed(3)}</strong></p>
+                    {props.menu.map(item => (
+                        <ControllerRow
+                            key={item.type}
+                            label={item.type}
+                            count={item.count}
+                            add={props.add.bind(null, item.menuName)}
+                            remove={props.remove.bind(null, item.menuName)}
+                            canRemove={item.canRemove}
+                        />))
+                    }
+                    <Button
+                        onClick={props.onCheckout}
+                        width={'100px'}
+                        disabled={!props.menu.some(item => item.count > 0)}
+                    >
+                        Ready!
+                    </Button>
+                </>}
+            </div>
+        </Spinner>
+    );
 };
 
 Controller.propTypes = {

@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 
+import axios from "../../utils/axios/builder";
+
 import Controller from "./Controller";
 import Dish from "./Dish";
 import OrderSummary from "./OrderSummary";
@@ -9,19 +11,9 @@ class Builder extends Component{
 
     state = {
         ingredients: [],
-
-        menu: {
-            breadTop: {price: 0.1, count: 1, type:'BreadTop', canAdd: false, canRemove: false},
-            breadBottom: {price: 0.1, count: 1, type:'BreadBottom', canAdd: false, canRemove: false},
-            salad: {price: 0.2, count: 0, type: 'Salad', canAdd: true, canRemove: false},
-            cheese: {price: 0.3, count: 0, type: 'Cheese', canAdd: true, canRemove: false},
-            bacon: {price: 0.45, count: 0, type: 'Bacon', canAdd: true, canRemove: false},
-            onion: {price: 0.25, count: 0, type: 'Onion', canAdd: true, canRemove: false},
-            tomato: {price: 0.35, count: 0, type: 'Tomato', canAdd: true, canRemove: false},
-            meat: {price: 0.75, count: 0, type: 'Meat', canAdd: true, canRemove: false},
-        },
-
-        price: 0.2,
+        menu: {},
+        price: 0,
+        isFetching: true,
         isShowSummary: false,
     }
 
@@ -102,6 +94,18 @@ class Builder extends Component{
     }
 
 
+    componentDidMount() {
+        axios.get("/menu/")
+            .then(res => {
+               const menu = res.data;
+               const price = Object.keys(menu)
+                   .filter(key => menu[key].count > 0)
+                   .map(key => menu[key].price * menu[key].count)
+                   .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+               this.setState({price, menu, isFetching: false});
+            });
+    }
+
     render() {
         const menuArray = Object.keys(this.state.menu)
             .filter(key => this.state.menu[key].canAdd)
@@ -121,6 +125,7 @@ class Builder extends Component{
                     onIngredientClick={this.removeAccurateIngredient}
                 />
                 <Controller
+                    isFetching={this.state.isFetching}
                     price={this.state.price}
                     menu={menuArray}
                     add={this.addIngredient}

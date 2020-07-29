@@ -11,6 +11,10 @@
     gap: 0.5rem;
 }
 
+.Container:empty {
+    height: 400px;
+}
+
 p {
     margin: 0;
 }
