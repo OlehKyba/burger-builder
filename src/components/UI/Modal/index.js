@@ -6,6 +6,7 @@ import classes from "./Modal.module.css";
 
 import Button from "../Button";
 import Backdrop from "../Backdrop";
+import Spinner from "../Spinner";
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -33,6 +34,7 @@ class Modal extends Component {
             this.props.isShow &&
                 <>
                     <div className={classes.Modal}>
+                        <Spinner>
                         <div className={classes.Text}>
                             {this.props.children}
                         </div>
@@ -40,6 +42,7 @@ class Modal extends Component {
                             <Button width={'60px'} onClick={this.props.onSubmit}>Yes</Button>
                             <Button width={'60px'} onClick={this.props.onCancel} invert>No</Button>
                         </div>
+                        </Spinner>
                     </div>
                     <Backdrop isShow={this.props.isShow} onClick={this.props.onCancel}/>
                 </>
