@@ -13,7 +13,7 @@
     overflow: auto;
 }
 
-.Text {
+.ModalBody {
     padding-top: 25px;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,7 @@
     align-self: center;
 }
 
-.Buttons{
+.ModalFooter{
     display: flex;
     justify-content: center;
     gap: 1rem;

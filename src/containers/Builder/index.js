@@ -5,7 +5,12 @@ import axios from "../../utils/axios/builder";
 import Controller from "./Controller";
 import Dish from "./Dish";
 import OrderSummary from "./OrderSummary";
+
 import Modal from "../../components/UI/Modal";
+import ModalBody from "../../components/UI/Modal/ModalBody";
+import ModalFooter from "../../components/UI/Modal/ModalFooter";
+import Button from "../../components/UI/Button";
+import Spinner from "../../components/UI/Spinner";
 
 class Builder extends Component{
 
@@ -114,10 +119,17 @@ class Builder extends Component{
             <>
                 <Modal
                     isShow={this.state.isShowSummary}
-                    onSubmit={this.checkoutHandler}
                     onCancel={this.checkoutCancelHandler}
                 >
-                    <OrderSummary menu={menuArray}/>
+                    <Spinner isSpin={false}>
+                        <ModalBody>
+                            <OrderSummary menu={menuArray} />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button width={'60px'} onClick={this.checkoutHandler}>Yes</Button>
+                            <Button width={'60px'} onClick={this.checkoutCancelHandler} invert>No</Button>
+                        </ModalFooter>
+                    </Spinner>
                 </Modal>
                 <Dish
                     ingredients={this.state.ingredients}

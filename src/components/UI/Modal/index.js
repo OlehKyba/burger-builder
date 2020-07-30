@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 
 import classes from "./Modal.module.css";
 
-import Button from "../Button";
 import Backdrop from "../Backdrop";
-import Spinner from "../Spinner";
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -34,15 +32,7 @@ class Modal extends Component {
             this.props.isShow &&
                 <>
                     <div className={classes.Modal}>
-                        <Spinner>
-                        <div className={classes.Text}>
-                            {this.props.children}
-                        </div>
-                        <div className={classes.Buttons}>
-                            <Button width={'60px'} onClick={this.props.onSubmit}>Yes</Button>
-                            <Button width={'60px'} onClick={this.props.onCancel} invert>No</Button>
-                        </div>
-                        </Spinner>
+                        {this.props.children}
                     </div>
                     <Backdrop isShow={this.props.isShow} onClick={this.props.onCancel}/>
                 </>
@@ -53,11 +43,10 @@ class Modal extends Component {
 
 Modal.propTypes = {
     isShow: PropTypes.bool,
-    onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     children: PropTypes.oneOfType([
         PropTypes.element,
-        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.element),
     ]),
 };
 
