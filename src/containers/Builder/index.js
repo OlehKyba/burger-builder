@@ -22,6 +22,7 @@ class Builder extends Component{
         menu: {},
         price: 0,
         isMenuFetching: true,
+        isMenuFetchingFailed: false,
         isCheckoutFetching: false,
         isShowSummary: false,
     }
@@ -136,7 +137,8 @@ class Builder extends Component{
                    .map(key => menu[key].price * menu[key].count)
                    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
                this.setState({price, menu, isMenuFetching: false});
-            });
+            })
+            .catch(() => this.setState({isMenuFetching: false, isMenuFetchingFailed: true}));
     }
 
     render() {
@@ -164,17 +166,21 @@ class Builder extends Component{
                     menu={this.state.menu}
                     onIngredientClick={this.removeAccurateIngredient}
                 />
-                <Controller
-                    isFetching={this.state.isMenuFetching}
-                    price={this.state.price}
-                    menu={menuArray}
-                    add={this.addIngredient}
-                    remove={this.removeIngredient}
-                    onCheckout={this.openCheckoutModal}
-                />
+                {
+                    this.state.isMenuFetchingFailed ?
+                        <p>Sorry, we have an error!</p> :
+                        <Controller
+                            isFetching={this.state.isMenuFetching}
+                            price={this.state.price}
+                            menu={menuArray}
+                            add={this.addIngredient}
+                            remove={this.removeIngredient}
+                            onCheckout={this.openCheckoutModal}
+                        />
+                }
             </>
         );
     }
 }
 
-export default withErrorHandler(OnErrorModal)(Builder, axios);
+export default withErrorHandler(OnErrorModal, Builder, axios);

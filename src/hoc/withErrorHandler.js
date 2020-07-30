@@ -1,24 +1,38 @@
-import React, {useState, useEffect} from "react";
+import React, {Component} from "react";
 
-const withErrorHandler = ModalOnError => (WrappedComponent, axiosInstance) => props => {
-    const [error, errorHandler] = useState(null);
-    const onCancel = () => errorHandler(null);
-    useEffect(() => {
-        axiosInstance.interceptors.request.use(req => {
-            errorHandler(null);
-            return req;
-        });
-        axiosInstance.interceptors.response.use(res => res, error => {
-            errorHandler(error);
-        });
-    }, []);
+const withErrorHandler = (ModalOnError, WrappedComponent, axiosInstance) => {
+    return class extends Component {
 
-    return (
-        <>
-            <ModalOnError isShow={!!error} error={error} onCancel={onCancel}/>
-            <WrappedComponent {...props} />
-        </>
-    );
+        state = {
+            error: null,
+        };
+
+        componentWillUnmount() {
+            axiosInstance.interceptors.request.eject(this.reqInterceptor);
+            axiosInstance.interceptors.response.eject(this.resInterceptor);
+        }
+
+        UNSAFE_componentWillMount() {
+            this.reqInterceptor = axiosInstance.interceptors.request.use(req => {
+                this.setState({error: null});
+                return req;
+            });
+
+            this.resInterceptor = axiosInstance.interceptors.response.use(res => res,
+                error => this.setState({error}));
+        }
+
+        onCancel = () => this.setState({error: null});
+
+        render() {
+            return (
+                <>
+                    <ModalOnError isShow={!!this.state.error} error={this.state.error} onCancel={this.onCancel} axios={axiosInstance}/>
+                    <WrappedComponent {...this.props} />
+                </>
+            );
+        }
+    }
 };
 
 export default withErrorHandler;
