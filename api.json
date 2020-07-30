@@ -56,5 +56,62 @@
       "canAdd": true,
       "canRemove": false
     }
-  }
+  },
+  "orders": [
+    {
+      "ingredients": [
+        {
+          "type": "BreadTop",
+          "count": 1,
+          "menuName": "breadTop"
+        },
+        {
+          "type": "BreadBottom",
+          "count": 1,
+          "menuName": "breadBottom"
+        },
+        {
+          "type": "Salad",
+          "count": 1,
+          "menuName": "salad"
+        },
+        {
+          "type": "Cheese",
+          "count": 1,
+          "menuName": "cheese"
+        },
+        {
+          "type": "Bacon",
+          "count": 1,
+          "menuName": "bacon"
+        },
+        {
+          "type": "Onion",
+          "count": 1,
+          "menuName": "onion"
+        },
+        {
+          "type": "Tomato",
+          "count": 1,
+          "menuName": "tomato"
+        },
+        {
+          "type": "Meat",
+          "count": 1,
+          "menuName": "meat"
+        }
+      ],
+      "price": 2.5,
+      "customer": {
+        "name": "Oleh Kyba",
+        "address": {
+          "street": "Test",
+          "zipCode": "12345",
+          "country": "Ukraine"
+        },
+        "deliveryType": "fastest"
+      },
+      "id": 1
+    }
+  ]
 }

@@ -18,13 +18,40 @@ class Builder extends Component{
         ingredients: [],
         menu: {},
         price: 0,
-        isFetching: true,
+        isMenuFetching: true,
+        isCheckoutFetching: false,
         isShowSummary: false,
     }
 
     checkoutHandler = () => {
-      alert("Checkout success!");
-      this.setState({isShowSummary: false});
+        const ingredients = Object.keys(this.state.menu)
+            .filter(key => this.state.menu[key].count > 0)
+            .map(key => ({
+                type: this.state.menu[key].type,
+                count: this.state.menu[key].count,
+                menuName: key
+            }));
+
+        const order = {
+            ingredients,
+            price: this.state.price,
+            customer: {
+                name: "Oleh Kyba",
+                address: {
+                    street: "Test",
+                    zipCode: "12345",
+                    country: "Ukraine",
+                },
+                deliveryType: "fastest",
+            }
+        };
+        this.setState({isCheckoutFetching: true});
+        axios.post("/orders/", order)
+            .then(res => {
+                this.setState({isCheckoutFetching: false});
+                console.log(res);
+            });
+
     };
 
     checkoutCancelHandler = () => {
@@ -107,7 +134,7 @@ class Builder extends Component{
                    .filter(key => menu[key].count > 0)
                    .map(key => menu[key].price * menu[key].count)
                    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-               this.setState({price, menu, isFetching: false});
+               this.setState({price, menu, isMenuFetching: false});
             });
     }
 
@@ -121,7 +148,7 @@ class Builder extends Component{
                     isShow={this.state.isShowSummary}
                     onCancel={this.checkoutCancelHandler}
                 >
-                    <Spinner isSpin={false}>
+                    <Spinner isSpin={this.state.isCheckoutFetching}>
                         <ModalBody>
                             <OrderSummary menu={menuArray} />
                         </ModalBody>
@@ -137,7 +164,7 @@ class Builder extends Component{
                     onIngredientClick={this.removeAccurateIngredient}
                 />
                 <Controller
-                    isFetching={this.state.isFetching}
+                    isFetching={this.state.isMenuFetching}
                     price={this.state.price}
                     menu={menuArray}
                     add={this.addIngredient}
