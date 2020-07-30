@@ -5,6 +5,9 @@ import axios from "../../utils/axios/builder";
 import Controller from "./Controller";
 import Dish from "./Dish";
 import OrderSummary from "./OrderSummary";
+import OnErrorModal from "./OnErrorModal";
+
+import withErrorHandler from "../../hoc/withErrorHandler";
 
 import Modal from "../../components/UI/Modal";
 import ModalBody from "../../components/UI/Modal/ModalBody";
@@ -46,11 +49,9 @@ class Builder extends Component{
             }
         };
         this.setState({isCheckoutFetching: true});
+        const onAnyResponse = () => this.setState({isCheckoutFetching: false, isShowSummary: false});
         axios.post("/orders/", order)
-            .then(res => {
-                this.setState({isCheckoutFetching: false});
-                console.log(res);
-            });
+            .then(onAnyResponse, onAnyResponse);
 
     };
 
@@ -176,4 +177,4 @@ class Builder extends Component{
     }
 }
 
-export default Builder;
+export default withErrorHandler(OnErrorModal)(Builder, axios);
