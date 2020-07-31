@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import classes from "./Nav.module.css";
 
 import RightNav from "../RightNav";
-import NavItem from "../NavItem";
 import BurgerIcon from "../BurgerIcon";
 import Backdrop from "../../UI/Backdrop";
 
@@ -31,8 +30,8 @@ Nav.propTypes = {
     onBurgerIconClick: PropTypes.func,
     logo: PropTypes.element,
     children: PropTypes.oneOfType([
-        PropTypes.objectOf(NavItem),
-        PropTypes.arrayOf(PropTypes.objectOf(NavItem)),
+        PropTypes.element,
+        PropTypes.arrayOf(PropTypes.element),
     ]),
 };
 
