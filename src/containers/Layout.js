@@ -6,6 +6,11 @@ import Header from "../components/Header";
 class Layout extends Component {
     state = {
         isSideDrawerOpen: false,
+        nav: [
+            {name: "Builder", link: "/"},
+            {name: "Checkout", link: "/checkout"},
+            {name: "Orders", link: "/orders"},
+        ],
     };
 
     sideDrawerChange = () => {
@@ -16,6 +21,7 @@ class Layout extends Component {
         return(
             <>
                 <Header
+                    nav={this.state.nav}
                     isSideDrawerOpen={this.state.isSideDrawerOpen}
                     onBurgerIconClick={this.sideDrawerChange}
                 />

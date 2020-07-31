@@ -169,14 +169,15 @@ class Builder extends Component{
                 {
                     this.state.isMenuFetchingFailed ?
                         <p>Sorry, we have an error!</p> :
-                        <Controller
-                            isFetching={this.state.isMenuFetching}
-                            price={this.state.price}
-                            menu={menuArray}
-                            add={this.addIngredient}
-                            remove={this.removeIngredient}
-                            onCheckout={this.openCheckoutModal}
-                        />
+                        <Spinner isSpin={this.state.isMenuFetching}>
+                            <Controller
+                                price={this.state.price}
+                                menu={menuArray}
+                                add={this.addIngredient}
+                                remove={this.removeIngredient}
+                                onCheckout={this.openCheckoutModal}
+                            />
+                        </Spinner>
                 }
             </>
         );
