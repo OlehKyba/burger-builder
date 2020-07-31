@@ -4,6 +4,7 @@ import './App.css';
 
 import Layout from "./containers/Layout";
 import Builder from "./containers/Builder";
+import Checkout from "./containers/Checkout";
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
                             <h1>Orders page</h1>
                         </Route>
                         <Route path={"/checkout"}>
-                            <h1>Checkout page</h1>
+                            <Checkout />
                         </Route>
                         <Route exact path={"/"}>
                             <Builder />

@@ -1,14 +1,15 @@
 import React, {Component} from "react";
+import {withRouter} from "react-router-dom";
 
 import axios from "../../utils/axios/builder";
 
 import Controller from "./Controller";
 import Dish from "./Dish";
-import OrderSummary from "./OrderSummary";
 import OnErrorModal from "./OnErrorModal";
 
 import withErrorHandler from "../../hoc/withErrorHandler";
 
+import OrderSummary from "../../components/OrderSummary";
 import Modal from "../../components/UI/Modal";
 import ModalBody from "../../components/UI/Modal/ModalBody";
 import ModalFooter from "../../components/UI/Modal/ModalFooter";
@@ -28,6 +29,19 @@ class Builder extends Component{
     }
 
     checkoutHandler = () => {
+        const params = Object.keys(this.state.menu)
+            .filter(key => this.state.menu[key].canAdd && this.state.menu[key].count > 0)
+            .reduce((accumulator, key) => {
+                accumulator[key] = this.state.menu[key].count;
+                return accumulator;
+            }, {price: this.state.price});
+
+        const search = "?" + Object.keys(params)
+            .map(key => `${key}=${params[key]}`)
+            .join("&");
+        this.props.history.push({pathname: "/checkout", search});
+        this.setState({isCheckoutFetching: false, isShowSummary: false});
+        /**
         const ingredients = Object.keys(this.state.menu)
             .filter(key => this.state.menu[key].count > 0)
             .map(key => ({
@@ -53,6 +67,7 @@ class Builder extends Component{
         const onAnyResponse = () => this.setState({isCheckoutFetching: false, isShowSummary: false});
         axios.post("/orders/", order)
             .then(onAnyResponse, onAnyResponse);
+         **/
 
     };
 
@@ -153,7 +168,7 @@ class Builder extends Component{
                 >
                     <Spinner isSpin={this.state.isCheckoutFetching}>
                         <ModalBody>
-                            <OrderSummary menu={menuArray} />
+                            <OrderSummary menu={menuArray} price={this.state.price}/>
                         </ModalBody>
                         <ModalFooter>
                             <Button width={'60px'} onClick={this.checkoutHandler}>Yes</Button>
@@ -184,4 +199,4 @@ class Builder extends Component{
     }
 }
 
-export default withErrorHandler(OnErrorModal, Builder, axios);
+export default withErrorHandler(OnErrorModal, withRouter(Builder), axios);

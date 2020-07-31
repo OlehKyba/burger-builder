@@ -8,12 +8,12 @@ const OrderSummary = props => {
             <p>A delicious burger with the following ingredients:</p>
             <ul>
                 {props.menu.map(ingredient => (
-                    <li key={ingredient.type}>
-                        {`${ingredient.type}: ${ingredient.count} x ${ingredient.price.toFixed(3)}`}
+                    <li key={ingredient.type} style={{textTransform: 'capitalize'}}>
+                        {`${ingredient.type}: ${ingredient.count}`}
                     </li>
                 ))}
             </ul>
-            <p>Continue to checkout?</p>
+            <strong><p>Total price: {props.price.toFixed(3)}</p></strong>
         </>
     );
 };
@@ -22,8 +22,8 @@ OrderSummary.propTypes = {
     menu: PropTypes.arrayOf(PropTypes.shape({
         type: PropTypes.string,
         count: PropTypes.number,
-        price: PropTypes.number,
     })).isRequired,
+    price: PropTypes.number,
 };
 
 export default OrderSummary;
