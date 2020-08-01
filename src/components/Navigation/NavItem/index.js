@@ -8,7 +8,7 @@ const NavItem = props => {
     return (
         <li className={classes.NavItem}>
             <NavLink
-                exact
+                exact={props.exact}
                 to={props.link}
                 activeClassName={classes.Active}
             >
@@ -19,6 +19,7 @@ const NavItem = props => {
 }
 
 NavItem.propTypes = {
+    exact: PropTypes.bool,
     link: PropTypes.string,
     children: PropTypes.string,
 };

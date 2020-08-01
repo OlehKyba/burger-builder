@@ -7,9 +7,9 @@ class Layout extends Component {
     state = {
         isSideDrawerOpen: false,
         nav: [
-            {name: "Builder", link: "/"},
-            {name: "Checkout", link: "/checkout"},
-            {name: "Orders", link: "/orders"},
+            {name: "Builder", link: "/", exact: true},
+            //{name: "Checkout", link: "/checkout", exact: false},
+            {name: "Orders", link: "/orders", exact: false},
         ],
     };
 

@@ -14,7 +14,11 @@ const Header = props => {
                 onBurgerIconClick={props.onBurgerIconClick}
             >
                 {props.nav.map(item => (
-                    <NavItem link={item.link} key={item.name}>
+                    <NavItem
+                        exact={item.exact}
+                        link={item.link}
+                        key={item.name}
+                    >
                         {item.name}
                     </NavItem>
                 ))}
@@ -25,6 +29,7 @@ const Header = props => {
 
 Header.propTypes = {
     nav: PropTypes.arrayOf(PropTypes.shape({
+        exact: PropTypes.bool,
         name: PropTypes.string,
         link: PropTypes.string,
     })),
