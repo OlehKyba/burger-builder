@@ -5,6 +5,7 @@ import './App.css';
 import Layout from "./containers/Layout";
 import Builder from "./containers/Builder";
 import Checkout from "./containers/Checkout";
+import Orders from "./containers/Orders";
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
                 <Layout>
                     <Switch>
                         <Route path={"/orders"}>
-                            <h1>Orders page</h1>
+                            <Orders />
                         </Route>
                         <Route path={"/checkout"}>
                             <Checkout />

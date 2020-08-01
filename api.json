@@ -261,6 +261,44 @@
         }
       },
       "id": 6
+    },
+    {
+      "ingredients": [
+        {
+          "type": "salad",
+          "count": 1
+        },
+        {
+          "type": "cheese",
+          "count": 1
+        },
+        {
+          "type": "bacon",
+          "count": 1
+        },
+        {
+          "type": "onion",
+          "count": 1
+        },
+        {
+          "type": "tomato",
+          "count": 1
+        },
+        {
+          "type": "meat",
+          "count": 1
+        }
+      ],
+      "price": 2.5,
+      "customer": {
+        "name": "Oleh",
+        "email": "vestigor0@gmail.com",
+        "address": {
+          "street": "Ольжича 35А",
+          "postalCode": "04060"
+        }
+      },
+      "id": 7
     }
   ]
 }

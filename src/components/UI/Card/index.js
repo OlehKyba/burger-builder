@@ -12,7 +12,10 @@ const Card = props => {
 };
 
 Card.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.element),
+        PropTypes.element,
+    ]),
 };
 
 export default Card;
