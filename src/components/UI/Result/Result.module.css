@@ -1,0 +1,76 @@
+.Svg {
+    width: 100px;
+    display: block;
+    margin: 40px auto 0;
+}
+
+.Path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.Circle {
+    animation: dash 1s ease-in-out;
+}
+
+.Line {
+    stroke-dashoffset: 1000;
+    animation: dash 1s .5s ease-in-out forwards;
+}
+
+.Check {
+    stroke-dashoffset: -100;
+    animation: dash-check 1s .5s ease-in-out forwards;
+}
+
+.ResultContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    height: 100%;
+}
+
+.Success {
+    color: #52c41a;
+}
+
+.Success h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+.Success p {
+    color: black;
+}
+
+.Error {
+    color: #ff4d4f;
+}
+
+.Error h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+.Error p {
+    color: black;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+    100% {
+        stroke-dashoffset: 900;
+    }
+}

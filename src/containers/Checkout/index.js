@@ -7,6 +7,7 @@ import ContactData from "./ContactData";
 
 import Card from "../../components/UI/Card";
 import OrderSummary from "../../components/OrderSummary";
+import Result from "../../components/UI/Result";
 
 class Checkout extends Component {
 
@@ -35,7 +36,6 @@ class Checkout extends Component {
     }
 
     render() {
-        console.log(this.props.history)
         return (
             <section className={classes.Container}>
                 <Card>
@@ -53,7 +53,31 @@ class Checkout extends Component {
                                 price={this.state.price}
                             />)}
                     />
-                    <Route path={this.props.match.url + "/:status"} render={props => <p>{props.match.params.status}</p>}/>
+                    <Route
+                        path={this.props.match.url + "/success"}
+                        render={() => (
+                            <Result
+                                status={"success"}
+                            >
+                                <h2>Success!</h2>
+                                <p>Thank you for your choice!</p>
+                            </Result> )}
+                    />
+                    <Route
+                        path={this.props.match.url + "/error"}
+                        render={({location}) => {
+                            const searchParams = new URLSearchParams(location.search);
+                            const message = searchParams.get('message');
+                            return (
+                                <Result
+                                    status={"error"}
+                                >
+                                    <h4>Error!</h4>
+                                    <p>{message}</p>
+                                </Result>
+                            );
+                        }}
+                    />
                 </Switch>
             </section>
         );

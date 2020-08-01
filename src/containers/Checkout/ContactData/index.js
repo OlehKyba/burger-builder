@@ -38,7 +38,7 @@ class ContactData extends Component {
             .catch(error => {
                 this.setState({isLoading: false});
                 const path = this.props.match.url + '/error?message=' + error.message;
-                this.props.history.replace(path);
+                this.props.history.push(path);
             });
     };
 
@@ -47,16 +47,16 @@ class ContactData extends Component {
             <Spinner isSpin={this.state.isLoading}>
                 <div className={classes.Container}>
                     <h4 className={classes.Title}>Enter your contact data:</h4>
-                    <form className={classes.FormContainer}>
-                        <input type="text" placeholder="Your Name"/>
-                        <input type="email" placeholder="Email"/>
-                        <input type="text" placeholder="Street"/>
-                        <input type="text" placeholder="Post Code"/>
-                        <div className={classes.ButtonsContainer}>
-                            <Button width={'80px'} onClick={this.onSubmit}>Confirm</Button>
-                            {this.props.onCancel && <Button width={'80px'} onClick={this.props.onCancel} invert>Cancel</Button>}
-                        </div>
-                    </form>
+                     <form className={classes.FormContainer}>
+                         <input type="text" placeholder="Your Name"/>
+                         <input type="email" placeholder="Email"/>
+                         <input type="text" placeholder="Street"/>
+                         <input type="text" placeholder="Post Code"/>
+                         <div className={classes.ButtonsContainer}>
+                             <Button width={'80px'} onClick={this.onSubmit}>Confirm</Button>
+                             {this.props.onCancel && <Button width={'80px'} onClick={this.props.onCancel} invert>Cancel</Button>}
+                         </div>
+                     </form>
                 </div>
             </Spinner>
         );
