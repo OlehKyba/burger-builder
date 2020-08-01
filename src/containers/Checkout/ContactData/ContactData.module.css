@@ -1,0 +1,29 @@
+.Container {
+    background-color: #cf8f2e;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.FormContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ButtonsContainer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.Title {
+    margin: 0;
+}

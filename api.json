@@ -61,57 +61,100 @@
     {
       "ingredients": [
         {
-          "type": "BreadTop",
-          "count": 1,
-          "menuName": "breadTop"
+          "type": "bacon",
+          "count": 1
         },
         {
-          "type": "BreadBottom",
-          "count": 1,
-          "menuName": "breadBottom"
+          "type": "onion",
+          "count": 1
         },
         {
-          "type": "Salad",
-          "count": 1,
-          "menuName": "salad"
+          "type": "tomato",
+          "count": 1
         },
         {
-          "type": "Cheese",
-          "count": 1,
-          "menuName": "cheese"
-        },
-        {
-          "type": "Bacon",
-          "count": 1,
-          "menuName": "bacon"
-        },
-        {
-          "type": "Onion",
-          "count": 1,
-          "menuName": "onion"
-        },
-        {
-          "type": "Tomato",
-          "count": 1,
-          "menuName": "tomato"
-        },
-        {
-          "type": "Meat",
-          "count": 1,
-          "menuName": "meat"
+          "type": "meat",
+          "count": 1
         }
       ],
       "price": 2.5,
       "customer": {
-        "name": "Oleh Kyba",
+        "name": "Test",
+        "email": "test@test.com",
         "address": {
           "street": "Test",
-          "zipCode": "12345",
-          "country": "Ukraine"
-        },
-        "deliveryType": "fastest"
+          "zipCode": "12345"
+        }
       },
       "id": 1
+    },
+    {
+      "ingredients": [
+        {
+          "type": "salad",
+          "count": 1
+        },
+        {
+          "type": "cheese",
+          "count": 1
+        },
+        {
+          "type": "bacon",
+          "count": 1
+        },
+        {
+          "type": "onion",
+          "count": 1
+        },
+        {
+          "type": "tomato",
+          "count": 1
+        },
+        {
+          "type": "meat",
+          "count": 1
+        }
+      ],
+      "price": 2.5,
+      "customer": {
+        "name": "Oleh",
+        "email": "vestigor0@gmail.com",
+        "address": {
+          "street": "Ольжича 35А",
+          "postalCode": "04060"
+        }
+      },
+      "id": 2
+    },
+    {
+      "ingredients": [
+        {
+          "type": "salad",
+          "count": 1
+        },
+        {
+          "type": "cheese",
+          "count": 1
+        },
+        {
+          "type": "onion",
+          "count": 1
+        },
+        {
+          "type": "tomato",
+          "count": 1
+        }
+      ],
+      "price": 1.2999999999999998,
+      "customer": {
+        "name": "Oleh",
+        "email": "vestigor0@gmail.com",
+        "address": {
+          "street": "Ольжича 35А",
+          "postalCode": "04060"
+        }
+      },
+      "id": 3
     }
   ]
 }

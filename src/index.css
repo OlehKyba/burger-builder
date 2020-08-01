@@ -9,7 +9,20 @@ body {
   background: #f3d9b1;
 }
 
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#root{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 main {
+  height: 100%;
   margin-top: 56px;
   display: flex;
   flex-direction: column;

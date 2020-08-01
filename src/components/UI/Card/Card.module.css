@@ -8,6 +8,7 @@
     padding-left: 50px;
     line-height: 25px;
     font-family: 'Indie Flower';
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
