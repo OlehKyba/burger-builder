@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 
+import classes from "./Builder.module.css";
+
 import axios from "../../utils/axios/builder";
 
 import Controller from "./Controller";
 import Dish from "./Dish";
-import OnErrorModal from "./OnErrorModal";
+import OnErrorModal from "../OnErrorModal";
 
 import withErrorHandler from "../../hoc/withErrorHandler";
 
@@ -15,6 +17,7 @@ import ModalBody from "../../components/UI/Modal/ModalBody";
 import ModalFooter from "../../components/UI/Modal/ModalFooter";
 import Button from "../../components/UI/Button";
 import Spinner from "../../components/UI/Spinner";
+import Result from "../../components/UI/Result";
 
 class Builder extends Component{
 
@@ -22,8 +25,8 @@ class Builder extends Component{
         ingredients: [],
         menu: {},
         price: 0,
+        error: null,
         isMenuFetching: true,
-        isMenuFetchingFailed: false,
         isCheckoutFetching: false,
         isShowSummary: false,
     }
@@ -41,34 +44,6 @@ class Builder extends Component{
             .join("&");
         this.props.history.push({pathname: "/checkout", search});
         this.setState({isCheckoutFetching: false, isShowSummary: false});
-        /**
-        const ingredients = Object.keys(this.state.menu)
-            .filter(key => this.state.menu[key].count > 0)
-            .map(key => ({
-                type: this.state.menu[key].type,
-                count: this.state.menu[key].count,
-                menuName: key
-            }));
-
-        const order = {
-            ingredients,
-            price: this.state.price,
-            customer: {
-                name: "Oleh Kyba",
-                address: {
-                    street: "Test",
-                    zipCode: "12345",
-                    country: "Ukraine",
-                },
-                deliveryType: "fastest",
-            }
-        };
-        this.setState({isCheckoutFetching: true});
-        const onAnyResponse = () => this.setState({isCheckoutFetching: false, isShowSummary: false});
-        axios.post("/orders/", order)
-            .then(onAnyResponse, onAnyResponse);
-         **/
-
     };
 
     checkoutCancelHandler = () => {
@@ -153,7 +128,7 @@ class Builder extends Component{
                    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
                this.setState({price, menu, isMenuFetching: false});
             })
-            .catch(() => this.setState({isMenuFetching: false, isMenuFetchingFailed: true}));
+            .catch(error => this.setState({isMenuFetching: false, error: error.message}));
     }
 
     render() {
@@ -182,8 +157,13 @@ class Builder extends Component{
                     onIngredientClick={this.removeAccurateIngredient}
                 />
                 {
-                    this.state.isMenuFetchingFailed ?
-                        <p>Sorry, we have an error!</p> :
+                    this.state.error ?
+                        <div className={classes.ErrorContainer}>
+                            <Result status={"error"}>
+                                <h3>Error!</h3>
+                                <p>{this.state.error}</p>
+                            </Result>
+                        </div>:
                         <Spinner isSpin={this.state.isMenuFetching}>
                             <Controller
                                 price={this.state.price}

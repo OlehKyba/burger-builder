@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Modal from "../../components/UI/Modal";
-import ModalBody from "../../components/UI/Modal/ModalBody";
-import ModalFooter from "../../components/UI/Modal/ModalFooter";
-import Button from "../../components/UI/Button";
+import Modal from "../components/UI/Modal";
+import ModalBody from "../components/UI/Modal/ModalBody";
+import ModalFooter from "../components/UI/Modal/ModalFooter";
+import Button from "../components/UI/Button";
 
 const OnErrorModal = props => {
     return (

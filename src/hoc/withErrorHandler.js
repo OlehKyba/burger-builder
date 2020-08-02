@@ -19,7 +19,10 @@ const withErrorHandler = (ModalOnError, WrappedComponent, axiosInstance) => {
             });
 
             this.resInterceptor = axiosInstance.interceptors.response.use(res => res,
-                error => this.setState({error}));
+                error => {
+                this.setState({error});
+                return Promise.reject(error);
+            });
         }
 
         onCancel = () => this.setState({error: null});
