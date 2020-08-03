@@ -31,10 +31,7 @@ Order.propTypes = {
     customer: PropTypes.shape({
         name: PropTypes.string,
         email: PropTypes.string,
-        address: PropTypes.shape({
-            street: PropTypes.string,
-            postalCode: PropTypes.string,
-        }),
+        address: PropTypes.string,
     }),
 };
 

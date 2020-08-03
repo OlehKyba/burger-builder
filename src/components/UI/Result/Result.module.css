@@ -1,7 +1,6 @@
 .Svg {
-    width: 100px;
+    height: 80%;
     display: block;
-    margin: 40px auto 0;
 }
 
 .Path {
@@ -24,6 +23,7 @@
 }
 
 .ResultContainer {
+    height: 200px;
     display: flex;
     flex-flow: column;
     justify-content: center;

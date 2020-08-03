@@ -1,0 +1,39 @@
+.Container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2px
+}
+
+.Input {
+    font-weight: bold;
+    box-sizing: border-box;
+    outline: none;
+    height: 40px;
+    width: 100%;
+    padding: 0 8px;
+    border-radius: .25rem;
+    transition: all .65s ease-in-out;
+}
+
+.Primary {
+    border: #f9ca24 3px solid;
+    background-color: #f6e58d;
+    box-shadow: inset 0 0 7px #f9ca24;
+}
+
+.Error {
+    border: #D9391C 3px solid;
+    background-color: #FF6347;
+    box-shadow: inset 0 0 7px #D9391C;
+}
+
+.ErrorContainer {
+    font-weight: bold;
+    height: 1rem;
+    width: 100%;
+    color: #D9391C;
+    font-size: 0.75rem;
+}
