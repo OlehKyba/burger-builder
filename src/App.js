@@ -1,5 +1,9 @@
 import React from 'react';
+import {Provider} from "react-redux";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+import store from "./store";
+
 import './App.css';
 
 import Layout from "./containers/Layout";
@@ -9,23 +13,25 @@ import Orders from "./containers/Orders";
 
 function App() {
     return (
-        <BrowserRouter>
-            <div className="App">
-                <Layout>
-                    <Switch>
-                        <Route path={"/orders"}>
-                            <Orders />
-                        </Route>
-                        <Route path={"/checkout"}>
-                            <Checkout />
-                        </Route>
-                        <Route exact path={"/"}>
-                            <Builder />
-                        </Route>
-                    </Switch>
-                </Layout>
-            </div>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <div className="App">
+                    <Layout>
+                        <Switch>
+                            <Route path={"/orders"}>
+                                <Orders />
+                            </Route>
+                            <Route path={"/checkout"}>
+                                <Checkout />
+                            </Route>
+                            <Route exact path={"/"}>
+                                <Builder />
+                            </Route>
+                        </Switch>
+                    </Layout>
+                </div>
+            </BrowserRouter>
+        </Provider>
   );
 }
 

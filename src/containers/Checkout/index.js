@@ -1,19 +1,32 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 import {Switch, Route, withRouter} from "react-router-dom";
 
 import classes from "./Checkout.module.css";
 
-import ContactData from "./ContactData";
+import axios from "../../utils/axios/builder";
 
+import {
+    selectIngredients,
+    selectMenu,
+    selectPrice
+} from "../../store/ingredients/selectors";
+
+import ContactData from "./ContactData";
 import Card from "../../components/UI/Card";
 import OrderSummary from "../../components/OrderSummary";
 import Result from "../../components/UI/Result";
+import Spinner from "../../components/UI/Spinner";
 
 class Checkout extends Component {
 
     state = {
-        ingredients: [],
-        price: 0,
+        name: '',
+        email: '',
+        address: '',
+        phoneNumber: '',
+        deliveryType: 'cheapest',
+        isLoading: false,
     };
 
     onCheckoutCancel = event => {
@@ -21,47 +34,71 @@ class Checkout extends Component {
         this.props.history.goBack();
     };
 
-    componentDidMount() {
-        const searchParams = new URLSearchParams(this.props.location.search);
-        const newState = {ingredients: [], price: 0};
+    onCheckoutSubmit = customer => {
+        const ingredients = Object.keys(this.props.menu)
+            .filter(key => this.props.menu[key].canAdd && this.props.menu[key].count > 0)
+            .map(key => ({type: key, count: this.props.menu[key].count}));
 
-        for (const [key, value] of searchParams){
-            if (key === 'price')
-                newState.price = +value;
-            else
-                newState.ingredients.push({type: key, count: +value});
-        }
-
-        this.setState(newState);
-    }
+        const order = {
+            price: this.props.price,
+            ingredients,
+            customer,
+        };
+        this.setState({isLoading: true});
+        axios.post("/orders/", order)
+            .then(() => {
+                this.setState({isLoading: false});
+                const path = this.props.match.url + '/success';
+                this.props.history.replace(path);
+            })
+            .catch(error => {
+                this.setState({isLoading: false});
+                const path = this.props.match.url + '/error?message=' + error.message;
+                this.props.history.push(path);
+            });
+    };
 
     render() {
+        const menuArray = Object.keys(this.props.menu)
+            .filter(key => this.props.menu[key].canAdd)
+            .map(key => ({...this.props.menu[key], menuName: key}));
+
         return (
             <section className={classes.Container}>
                 <Card>
-                    <OrderSummary menu={this.state.ingredients} price={this.state.price}/>
+                    <OrderSummary menu={menuArray} price={this.props.price}/>
                 </Card>
                 <Switch>
                     <Route
                         exact
                         path={this.props.match.url + "/"}
-                        render={props => (
-                            <ContactData
-                                {...props}
-                                onCancel={this.onCheckoutCancel}
-                                ingredients={this.state.ingredients}
-                                price={this.state.price}
-                            />)}
+                        render={() => (
+                            <Spinner isSpin={this.state.isLoading}>
+                                <ContactData
+                                    initialValues={{
+                                        name: this.state.name,
+                                        email: this.state.email,
+                                        phoneNumber: this.state.phoneNumber,
+                                        address: this.state.address,
+                                        deliveryType: this.state.deliveryType,
+                                    }}
+                                    onSubmit={this.onCheckoutSubmit}
+                                    onCancel={this.onCheckoutCancel}
+                                />
+                            </Spinner>
+                        )}
                     />
                     <Route
                         path={this.props.match.url + "/success"}
                         render={() => (
+                            <div style={{height: "100%", display:"flex", justifyContent: "center", alignItems: "center"}}>
                             <Result
                                 status={"success"}
                             >
                                 <h2>Success!</h2>
                                 <p>Thank you for your choice!</p>
-                            </Result> )}
+                            </Result>
+                            </div>)}
                     />
                     <Route
                         path={this.props.match.url + "/error"}
@@ -69,12 +106,14 @@ class Checkout extends Component {
                             const searchParams = new URLSearchParams(location.search);
                             const message = searchParams.get('message');
                             return (
-                                <Result
-                                    status={"error"}
-                                >
-                                    <h4>Error!</h4>
-                                    <p>{message}</p>
-                                </Result>
+                                <div style={{height: "100%", display:"flex", justifyContent: "center", alignItems: "center"}}>
+                                    <Result
+                                        status={"error"}
+                                    >
+                                        <h4>Error!</h4>
+                                        <p>{message}</p>
+                                    </Result>
+                                </div>
                             );
                         }}
                     />
@@ -84,4 +123,11 @@ class Checkout extends Component {
     }
 }
 
-export default withRouter(Checkout);
+const mapStateToProps = state => ({
+    ingredients: selectIngredients(state),
+    menu: selectMenu(state),
+    price: selectPrice(state),
+});
+
+
+export default connect(mapStateToProps)(withRouter(Checkout));

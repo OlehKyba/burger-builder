@@ -3,12 +3,9 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from "prop-types";
 
-import axios from "../../../utils/axios/builder";
-
 import classes from "./ContactData.module.css";
 
 import Button from "../../../components/UI/Button";
-import Spinner from "../../../components/UI/Spinner";
 import Input from "../../../components/UI/Input";
 import SearchLocationInput from "../../../components/UI/Input/SearchLocationInput";
 import Select from "../../../components/UI/Select";
@@ -39,80 +36,49 @@ const ContactDataSchema = Yup.object().shape({
 
 
 class ContactData extends Component {
-
-    state = {
-        name: '',
-        email: '',
-        address: '',
-        phoneNumber: '',
-        deliveryType: 'cheapest',
-        isLoading: false,
-    };
-
-    onSubmit = customer => {
-        const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
-            customer,
-        };
-        this.setState({isLoading: true});
-        axios.post("/orders/", order)
-            .then(() => {
-                this.setState({isLoading: false});
-                const path = this.props.match.url + '/success';
-                this.props.history.replace(path);
-            })
-            .catch(error => {
-                this.setState({isLoading: false});
-                const path = this.props.match.url + '/error?message=' + error.message;
-                this.props.history.push(path);
-            });
-    };
-
     render() {
         return (
-            <Spinner isSpin={this.state.isLoading}>
-                <div className={classes.Container}>
-                    <h4 className={classes.Title}>Enter your contact data:</h4>
-                    <Formik
-                        initialValues={{
-                            name: this.state.name,
-                            email: this.state.email,
-                            phoneNumber: this.state.phoneNumber,
-                            address: this.state.address,
-                            deliveryType: this.state.deliveryType,
-                        }}
-                        onSubmit={this.onSubmit}
-                        validationSchema={ContactDataSchema}
-                    >
-                        <Form className={classes.FormContainer}>
-                            <Field name={'name'} placeholder={"Name"} type={"text"} component={Input} />
-                            <Field name={'email'} placeholder={"Email"} type={'email'} component={Input}/>
-                            <Field name={'phoneNumber'} placeholder={"Phone Number"} type={'tel'} component={Input}/>
-                            <Field name={'address'} placeholder={"Address"} type={'text'} component={SearchLocationInput}/>
-                            <Field name={'deliveryType'} component={Select}>
-                                <Option value={'fastest'}>Fastest</Option>
-                                <Option value={'cheapest'}>Cheapest</Option>
-                            </Field>
-                            <div className={classes.ButtonsContainer}>
-                                <Button width={'80px'} type={'submit'}>Confirm</Button>
-                                {this.props.onCancel && <Button width={'80px'} onClick={this.props.onCancel} invert>Cancel</Button>}
-                            </div>
-                        </Form>
-                    </Formik>
-                </div>
-            </Spinner>
+            <div className={classes.Container}>
+                <h4 className={classes.Title}>Enter your contact data:</h4>
+                <Formik
+                    initialValues={this.props.initialValues}
+                    onSubmit={this.props.onSubmit}
+                    validationSchema={ContactDataSchema}
+                >
+                    <Form className={classes.FormContainer}>
+                        <Field name={'name'} placeholder={"Name"} type={"text"} component={Input} />
+                        <Field name={'email'} placeholder={"Email"} type={'email'} component={Input}/>
+                        <Field name={'phoneNumber'} placeholder={"Phone Number"} type={'tel'} component={Input}/>
+                        <Field name={'address'} placeholder={"Address"} type={'text'} component={SearchLocationInput}/>
+                        <Field name={'deliveryType'} component={Select}>
+                            <Option value={'fastest'}>Fastest</Option>
+                            <Option value={'cheapest'}>Cheapest</Option>
+                        </Field>
+                        <div className={classes.ButtonsContainer}>
+                            <Button width={'80px'} type={'submit'}>Confirm</Button>
+                            {this.props.onCancel && <Button width={'80px'} onClick={this.props.onCancel} invert>Cancel</Button>}
+                        </div>
+                    </Form>
+                </Formik>
+            </div>
         );
     }
 }
 
 ContactData.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        type: PropTypes.string,
-        count: PropTypes.number,
-    })),
-    price: PropTypes.number,
     onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+
+    initialValues: PropTypes.shape({
+        name: PropTypes.string,
+        email: PropTypes.string,
+        phoneNumber: PropTypes.string,
+        address: PropTypes.string,
+        deliveryType: PropTypes.oneOf([
+            'fastest',
+            'cheapest',
+        ]),
+    })
 };
 
 export default ContactData;

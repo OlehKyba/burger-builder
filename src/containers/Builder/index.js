@@ -1,9 +1,21 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 
 import classes from "./Builder.module.css";
 
 import axios from "../../utils/axios/builder";
+
+import {
+    addIngredient,
+    removeLastIngredient,
+    removeIngredientById,
+} from "../../store/ingredients/actions";
+import {
+    selectMenu,
+    selectIngredients,
+    selectPrice,
+} from "../../store/ingredients/selectors";
 
 import Controller from "./Controller";
 import Dish from "./Dish";
@@ -22,27 +34,14 @@ import Result from "../../components/UI/Result";
 class Builder extends Component{
 
     state = {
-        ingredients: [],
-        menu: {},
-        price: 0,
         error: null,
-        isMenuFetching: true,
+        isMenuFetching: false,
         isCheckoutFetching: false,
         isShowSummary: false,
     }
 
     checkoutHandler = () => {
-        const params = Object.keys(this.state.menu)
-            .filter(key => this.state.menu[key].canAdd && this.state.menu[key].count > 0)
-            .reduce((accumulator, key) => {
-                accumulator[key] = this.state.menu[key].count;
-                return accumulator;
-            }, {price: this.state.price});
-
-        const search = "?" + Object.keys(params)
-            .map(key => `${key}=${params[key]}`)
-            .join("&");
-        this.props.history.push({pathname: "/checkout", search});
+        this.props.history.push("/checkout");
         this.setState({isCheckoutFetching: false, isShowSummary: false});
     };
 
@@ -54,70 +53,7 @@ class Builder extends Component{
         this.setState({isShowSummary: true});
     };
 
-
-    getIngredientId = menuItem => {
-        const {type} = menuItem;
-        const suffix = new Date().getTime();
-        return `${type}_${suffix}`;
-    };
-
-    getMenuName = ingredientId => {
-        const {menuName} = this.state.ingredients.find(item => item.id === ingredientId);
-        return menuName;
-    }
-
-    addIngredient = menuName => {
-        const ingredientData = {...this.state.menu[menuName]};
-        if (ingredientData.canAdd) {
-            ingredientData.count++;
-            ingredientData.canRemove = ingredientData.count > 0;
-            const price = this.state.price + ingredientData.price;
-            const ingredient = {menuName, id: this.getIngredientId(ingredientData)};
-            this.setState({
-                menu: {...this.state.menu, [menuName]: ingredientData},
-                ingredients: [...this.state.ingredients, ingredient],
-                price,
-            });
-        }
-    }
-
-    removeAccurateIngredient = ingredientId => {
-        const menuName = this.getMenuName(ingredientId);
-        const ingredientData = {...this.state.menu[menuName]};
-        if (ingredientData.canRemove) {
-            ingredientData.count--;
-            ingredientData.canRemove = ingredientData.count > 0;
-            const price = this.state.price - ingredientData.price;
-            const ingredients = [...this.state.ingredients];
-            const index = ingredients.findIndex(item => item.id === ingredientId);
-            ingredients.splice(index, 1);
-            this.setState({
-                menu: {...this.state.menu, [menuName]: ingredientData},
-                ingredients,
-                price,
-            });
-        }
-    }
-
-    removeIngredient = menuName => {
-        const ingredientData = {...this.state.menu[menuName]};
-        if (ingredientData.canRemove) {
-            ingredientData.count--;
-            ingredientData.canRemove = ingredientData.count > 0;
-            const price = this.state.price - ingredientData.price;
-            const ingredients = [...this.state.ingredients];
-            const pattern = new RegExp('^' + ingredientData.type);
-            const index = ingredients.length -1 - [...ingredients].reverse().findIndex(item => pattern.test(item.id));
-            ingredients.splice(index, 1);
-            this.setState({
-                menu: {...this.state.menu, [menuName]: ingredientData},
-                ingredients,
-                price,
-            });
-        }
-    }
-
-
+    /**
     componentDidMount() {
         axios.get("/menu/")
             .then(res => {
@@ -130,11 +66,12 @@ class Builder extends Component{
             })
             .catch(error => this.setState({isMenuFetching: false, error: error.message}));
     }
+     **/
 
     render() {
-        const menuArray = Object.keys(this.state.menu)
-            .filter(key => this.state.menu[key].canAdd)
-            .map(key => ({...this.state.menu[key], menuName: key}));
+        const menuArray = Object.keys(this.props.menu)
+            .filter(key => this.props.menu[key].canAdd)
+            .map(key => ({...this.props.menu[key], menuName: key}));
         return (
             <>
                 <Modal
@@ -143,7 +80,7 @@ class Builder extends Component{
                 >
                     <Spinner isSpin={this.state.isCheckoutFetching}>
                         <ModalBody>
-                            <OrderSummary menu={menuArray} price={this.state.price}/>
+                            <OrderSummary menu={menuArray} price={this.props.price}/>
                         </ModalBody>
                         <ModalFooter>
                             <Button width={'60px'} onClick={this.checkoutHandler}>Yes</Button>
@@ -152,9 +89,9 @@ class Builder extends Component{
                     </Spinner>
                 </Modal>
                 <Dish
-                    ingredients={this.state.ingredients}
-                    menu={this.state.menu}
-                    onIngredientClick={this.removeAccurateIngredient}
+                    ingredients={this.props.ingredients}
+                    menu={this.props.menu}
+                    onIngredientClick={this.props.removeIngredientById}
                 />
                 {
                     this.state.error ?
@@ -166,10 +103,10 @@ class Builder extends Component{
                         </div>:
                         <Spinner isSpin={this.state.isMenuFetching}>
                             <Controller
-                                price={this.state.price}
+                                price={this.props.price}
                                 menu={menuArray}
-                                add={this.addIngredient}
-                                remove={this.removeIngredient}
+                                add={this.props.addIngredient}
+                                remove={this.props.removeLastIngredient}
                                 onCheckout={this.openCheckoutModal}
                             />
                         </Spinner>
@@ -179,4 +116,23 @@ class Builder extends Component{
     }
 }
 
-export default withErrorHandler(OnErrorModal, withRouter(Builder), axios);
+const mapStateToProps = state => ({
+    ingredients: selectIngredients(state),
+    menu: selectMenu(state),
+    price: selectPrice(state),
+});
+
+const mapDispatchToProps = {
+    addIngredient,
+    removeLastIngredient,
+    removeIngredientById,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    withErrorHandler(
+        OnErrorModal,
+        withRouter(Builder),
+        axios
+    )
+);

@@ -4,10 +4,9 @@ import PropTypes from "prop-types";
 import classes from './Ingredients.module.css';
 
 const Ingredient = props => {
-
     return (
         <div className={classes[props.type]} onClick={props.onClick}>
-            {props.type === 'BreadTop' && <div className={classes.Seeds}></div>}
+            {props.type === 'BreadTop' && <div className={classes.Seeds}/>}
         </div>
     );
 };

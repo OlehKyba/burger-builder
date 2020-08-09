@@ -9,7 +9,7 @@ const OrderSummary = props => {
             <ul>
                 {props.menu.map(ingredient => (
                     <li key={ingredient.type} style={{textTransform: 'capitalize'}}>
-                        {`${ingredient.type}: ${ingredient.count}`}
+                        {`${ingredient.type}: ${ingredient.count} x ${ingredient.price}`}
                     </li>
                 ))}
             </ul>
@@ -20,6 +20,7 @@ const OrderSummary = props => {
 
 OrderSummary.propTypes = {
     menu: PropTypes.arrayOf(PropTypes.shape({
+        price: PropTypes.number,
         type: PropTypes.string,
         count: PropTypes.number,
     })).isRequired,
