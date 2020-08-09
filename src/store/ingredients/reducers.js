@@ -2,14 +2,23 @@ import {
     ADD_INGREDIENT,
     REMOVE_LAST_INGREDIENT,
     REMOVE_INGREDIENT_BY_ID,
+    SET_MENU,
+    MENU_FETCH_ERROR,
 } from "./types";
 
-const generateIngredientId = ingredientType => {
-    const suffix = new Date().getTime();
-    return `${ingredientType}_${suffix}`;
-};
+class Ingredient {
+    constructor(menuName) {
+        this.menuName = menuName;
+        this.id = Ingredient.generateIngredientId(menuName);
+    }
 
-const getMenuNameFromId = ingredientId => ingredientId.split('_')[0];
+    static generateIngredientId = ingredientType => {
+        const suffix = new Date().getTime();
+        return `${ingredientType}_${suffix}`;
+    };
+
+    static getMenuNameFromId = ingredientId => ingredientId.split('_')[0];
+}
 
 const removeStrategies = {
     [REMOVE_LAST_INGREDIENT]: {
@@ -30,7 +39,7 @@ const removeStrategies = {
     [REMOVE_INGREDIENT_BY_ID]: {
         selectFromMenu: (action, menu) => {
             const ingredientId = action.payload.id;
-            const menuName = getMenuNameFromId(ingredientId);
+            const menuName = Ingredient.getMenuNameFromId(ingredientId);
             return [menu[menuName], menuName];
         },
 
@@ -70,7 +79,7 @@ const addIngredient = (store, action) => {
     const {menuName} = action.payload;
     const ingredientData = store.menu[menuName];
     if (ingredientData.canAdd) {
-        const ingredient = {menuName, id: generateIngredientId(menuName)};
+        const ingredient = new Ingredient(menuName);
         return {
             ...store,
             menu: {
@@ -91,67 +100,46 @@ const addIngredient = (store, action) => {
     return store;
 };
 
+const setMenu = (store, action) => {
+    const {menu} = action.payload;
+    const ingredientsNotZeroKeys = Object.keys(menu).filter(key => menu[key].count > 0);
+
+    const ingredients = ingredientsNotZeroKeys
+        .filter(key => menu[key].canAdd)
+        .map(key => new Ingredient(key));
+
+    const price = ingredientsNotZeroKeys
+        .map(key => menu[key].price * menu[key].count)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    return {
+        ...store,
+        menu,
+        ingredients,
+        price,
+        errors: {
+            ...store.errors,
+            menu: null,
+        },
+    };
+};
+
+const onMenuFetchError = (store, action) => {
+    const error = action.error;
+    return {
+        ...store,
+        errors: {
+            ...store.errors,
+            menu: error,
+        },
+    }
+};
+
 const initialStore = {
-    menu: {
-        breadTop: {
-            price: 0.1,
-            count: 1,
-            type: "BreadTop",
-            canAdd: false,
-            canRemove: false,
-        },
-        breadBottom: {
-            price: 0.1,
-            count: 1,
-            type: "BreadBottom",
-            canAdd: false,
-            canRemove: false,
-        },
-        salad: {
-            price: 0.2,
-            count: 0,
-            type: "Salad",
-            canAdd: true,
-            canRemove: false,
-        },
-        cheese: {
-            price: 0.3,
-            count: 0,
-            type: "Cheese",
-            canAdd: true,
-            canRemove: false,
-        },
-        bacon: {
-            price: 0.45,
-            count: 0,
-            type: "Bacon",
-            canAdd: true,
-            canRemove: false,
-        },
-        onion: {
-            price: 0.25,
-            count: 0,
-            type: "Onion",
-            canAdd: true,
-            canRemove: false,
-        },
-        tomato: {
-            price: 0.35,
-            count: 0,
-            type: "Tomato",
-            canAdd: true,
-            canRemove: false,
-        },
-        meat: {
-            price: 0.75,
-            count: 0,
-            type: "Meat",
-            canAdd: true,
-            canRemove: false,
-        }
-    },
+    menu: {},
     ingredients: [],
-    price: 0.4,
+    price: 0,
+    errors: {},
 };
 
 const ingredientsReducer = (store = initialStore, action) => {
@@ -162,10 +150,12 @@ const ingredientsReducer = (store = initialStore, action) => {
             return removeIngredient(store, action, REMOVE_LAST_INGREDIENT);
         case REMOVE_INGREDIENT_BY_ID:
             return removeIngredient(store, action, REMOVE_INGREDIENT_BY_ID);
+        case SET_MENU:
+            return setMenu(store, action);
+        case MENU_FETCH_ERROR:
+            return onMenuFetchError(store, action);
         default:
-            return {
-                ...store,
-            };
+            return store;
     }
 };
 

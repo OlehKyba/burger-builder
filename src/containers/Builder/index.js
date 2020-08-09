@@ -10,9 +10,12 @@ import {
     selectMenu,
     selectIngredients,
     selectPrice,
+    selectMenuError,
+    isMenuFetching,
     addIngredient,
     removeLastIngredient,
     removeIngredientById,
+    fetchMenu,
 } from "../../store/ingredients";
 
 import Controller from "./Controller";
@@ -32,15 +35,12 @@ import Result from "../../components/UI/Result";
 class Builder extends Component{
 
     state = {
-        error: null,
-        isMenuFetching: false,
-        isCheckoutFetching: false,
         isShowSummary: false,
     }
 
     checkoutHandler = () => {
         this.props.history.push("/checkout");
-        this.setState({isCheckoutFetching: false, isShowSummary: false});
+        this.setState({isShowSummary: false});
     };
 
     checkoutCancelHandler = () => {
@@ -51,20 +51,11 @@ class Builder extends Component{
         this.setState({isShowSummary: true});
     };
 
-    /**
+
     componentDidMount() {
-        axios.get("/menu/")
-            .then(res => {
-               const menu = res.data;
-               const price = Object.keys(menu)
-                   .filter(key => menu[key].count > 0)
-                   .map(key => menu[key].price * menu[key].count)
-                   .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-               this.setState({price, menu, isMenuFetching: false});
-            })
-            .catch(error => this.setState({isMenuFetching: false, error: error.message}));
+        if (Object.keys(this.props.menu).length < 1)
+            this.props.fetchMenu(axios);
     }
-     **/
 
     render() {
         const menuArray = Object.keys(this.props.menu)
@@ -76,15 +67,13 @@ class Builder extends Component{
                     isShow={this.state.isShowSummary}
                     onCancel={this.checkoutCancelHandler}
                 >
-                    <Spinner isSpin={this.state.isCheckoutFetching}>
-                        <ModalBody>
-                            <OrderSummary menu={menuArray} price={this.props.price}/>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button width={'60px'} onClick={this.checkoutHandler}>Yes</Button>
-                            <Button width={'60px'} onClick={this.checkoutCancelHandler} invert>No</Button>
-                        </ModalFooter>
-                    </Spinner>
+                    <ModalBody>
+                        <OrderSummary menu={menuArray} price={this.props.price}/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button width={'60px'} onClick={this.checkoutHandler}>Yes</Button>
+                        <Button width={'60px'} onClick={this.checkoutCancelHandler} invert>No</Button>
+                    </ModalFooter>
                 </Modal>
                 <Dish
                     ingredients={this.props.ingredients}
@@ -92,14 +81,14 @@ class Builder extends Component{
                     onIngredientClick={this.props.removeIngredientById}
                 />
                 {
-                    this.state.error ?
+                    this.props.error ?
                         <div className={classes.ErrorContainer}>
                             <Result status={"error"}>
                                 <h3>Error!</h3>
-                                <p>{this.state.error}</p>
+                                <p>{this.props.error}</p>
                             </Result>
                         </div>:
-                        <Spinner isSpin={this.state.isMenuFetching}>
+                        <Spinner isSpin={this.props.isMenuFetching}>
                             <Controller
                                 price={this.props.price}
                                 menu={menuArray}
@@ -118,12 +107,15 @@ const mapStateToProps = state => ({
     ingredients: selectIngredients(state),
     menu: selectMenu(state),
     price: selectPrice(state),
+    error: selectMenuError(state),
+    isMenuFetching: isMenuFetching(state),
 });
 
 const mapDispatchToProps = {
     addIngredient,
     removeLastIngredient,
     removeIngredientById,
+    fetchMenu,
 };
 
 

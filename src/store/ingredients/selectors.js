@@ -10,3 +10,11 @@ export function selectMenu(state){
 export function selectPrice(state){
     return state.builder.price;
 }
+
+export function selectMenuError(state){
+    return state.builder.errors.menu;
+}
+
+export function isMenuFetching(state){
+    return Object.keys(state.builder.menu).length < 1 || state.builder.errors.menu;
+}
