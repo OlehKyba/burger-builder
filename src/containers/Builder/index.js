@@ -7,15 +7,13 @@ import classes from "./Builder.module.css";
 import axios from "../../utils/axios/builder";
 
 import {
-    addIngredient,
-    removeLastIngredient,
-    removeIngredientById,
-} from "../../store/ingredients/actions";
-import {
     selectMenu,
     selectIngredients,
     selectPrice,
-} from "../../store/ingredients/selectors";
+    addIngredient,
+    removeLastIngredient,
+    removeIngredientById,
+} from "../../store/ingredients";
 
 import Controller from "./Controller";
 import Dish from "./Dish";

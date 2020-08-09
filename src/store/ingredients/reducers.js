@@ -66,6 +66,31 @@ const removeIngredient = (store, action, removeStrategy) => {
     return store;
 };
 
+const addIngredient = (store, action) => {
+    const {menuName} = action.payload;
+    const ingredientData = store.menu[menuName];
+    if (ingredientData.canAdd) {
+        const ingredient = {menuName, id: generateIngredientId(menuName)};
+        return {
+            ...store,
+            menu: {
+                ...store.menu,
+                [menuName]: {
+                    ...store.menu[menuName],
+                    count: ingredientData.count + 1,
+                    canRemove: ingredientData.count + 1 > 0,
+                },
+            },
+            ingredients: [
+                ...store.ingredients,
+                ingredient
+            ],
+            price: store.price + ingredientData.price,
+        };
+    }
+    return store;
+};
+
 const initialStore = {
     menu: {
         breadTop: {
@@ -132,30 +157,7 @@ const initialStore = {
 const ingredientsReducer = (store = initialStore, action) => {
     switch (action.type) {
         case ADD_INGREDIENT:
-        {
-            const {menuName} = action.payload;
-            const ingredientData = store.menu[menuName];
-            if (ingredientData.canAdd) {
-                const ingredient = {menuName, id: generateIngredientId(menuName)};
-                return {
-                    ...store,
-                    menu: {
-                        ...store.menu,
-                        [menuName]: {
-                            ...store.menu[menuName],
-                            count: ingredientData.count + 1,
-                            canRemove: ingredientData.count + 1 > 0,
-                        },
-                    },
-                    ingredients: [
-                        ...store.ingredients,
-                        ingredient
-                    ],
-                    price: store.price + ingredientData.price,
-                };
-            }
-            return store;
-        }
+            return addIngredient(store, action);
         case REMOVE_LAST_INGREDIENT:
             return removeIngredient(store, action, REMOVE_LAST_INGREDIENT);
         case REMOVE_INGREDIENT_BY_ID:

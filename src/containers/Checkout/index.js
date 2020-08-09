@@ -10,7 +10,7 @@ import {
     selectIngredients,
     selectMenu,
     selectPrice
-} from "../../store/ingredients/selectors";
+} from "../../store/ingredients";
 
 import ContactData from "./ContactData";
 import Card from "../../components/UI/Card";
