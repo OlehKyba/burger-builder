@@ -9,8 +9,15 @@ import axios from "../../utils/axios/builder";
 import {
     selectIngredients,
     selectMenu,
-    selectPrice
+    selectPrice,
+    resetIngredients,
 } from "../../store/ingredients";
+
+import {
+    isCreateOrderLoading,
+    selectCreateOrderError,
+    createOrder,
+} from "../../store/orders";
 
 import ContactData from "./ContactData";
 import Card from "../../components/UI/Card";
@@ -26,7 +33,6 @@ class Checkout extends Component {
         address: '',
         phoneNumber: '',
         deliveryType: 'cheapest',
-        isLoading: false,
     };
 
     onCheckoutCancel = event => {
@@ -44,36 +50,40 @@ class Checkout extends Component {
             ingredients,
             customer,
         };
-        this.setState({isLoading: true});
-        axios.post("/orders/", order)
+        this.props.createOrder(axios, order)
             .then(() => {
-                this.setState({isLoading: false});
+                this.props.resetIngredients();
                 const path = this.props.match.url + '/success';
                 this.props.history.replace(path);
             })
-            .catch(error => {
-                this.setState({isLoading: false});
-                const path = this.props.match.url + '/error?message=' + error.message;
+            .catch(() => {
+                const path = this.props.match.url + '/error';
                 this.props.history.push(path);
             });
     };
 
     render() {
         const menuArray = Object.keys(this.props.menu)
-            .filter(key => this.props.menu[key].canAdd)
+            .filter(key => this.props.menu[key].canAdd && this.props.menu[key].count > 0)
             .map(key => ({...this.props.menu[key], menuName: key}));
 
+        const path = this.props.location.pathname.split('/');
+        const isShowSummary = path[path.length - 1] !== 'success'
         return (
             <section className={classes.Container}>
+                {isShowSummary &&
                 <Card>
-                    <OrderSummary menu={menuArray} price={this.props.price}/>
-                </Card>
+                    <OrderSummary
+                        menu={menuArray}
+                        price={this.props.price}
+                    />
+                </Card>}
                 <Switch>
                     <Route
                         exact
                         path={this.props.match.url + "/"}
                         render={() => (
-                            <Spinner isSpin={this.state.isLoading}>
+                            <Spinner isSpin={this.props.isCreateOrderLoading}>
                                 <ContactData
                                     initialValues={{
                                         name: this.state.name,
@@ -102,16 +112,14 @@ class Checkout extends Component {
                     />
                     <Route
                         path={this.props.match.url + "/error"}
-                        render={({location}) => {
-                            const searchParams = new URLSearchParams(location.search);
-                            const message = searchParams.get('message');
+                        render={() => {
                             return (
                                 <div style={{height: "100%", display:"flex", justifyContent: "center", alignItems: "center"}}>
                                     <Result
                                         status={"error"}
                                     >
                                         <h4>Error!</h4>
-                                        <p>{message}</p>
+                                        <p>{this.props.createOrderError}</p>
                                     </Result>
                                 </div>
                             );
@@ -127,7 +135,13 @@ const mapStateToProps = state => ({
     ingredients: selectIngredients(state),
     menu: selectMenu(state),
     price: selectPrice(state),
+    isCreateOrderLoading: isCreateOrderLoading(state),
+    createOrderError: selectCreateOrderError(state),
 });
 
+const mapDispatchToProps = {
+    createOrder,
+    resetIngredients,
+};
 
-export default connect(mapStateToProps)(withRouter(Checkout));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout));

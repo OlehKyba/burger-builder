@@ -144,7 +144,6 @@ const resetIngredients = (store) => {
         })
     );
 
-    console.log(menu);
     const price = Object.keys(menu).filter(key => menu[key].count > 0)
         .map(key => menu[key].price * menu[key].count)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
