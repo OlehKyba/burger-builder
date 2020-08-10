@@ -4,6 +4,7 @@ import {
     REMOVE_INGREDIENT_BY_ID,
     SET_MENU,
     MENU_FETCH_ERROR,
+    RESET_INGREDIENTS,
 } from "./types";
 
 export function addIngredient(menuName){
@@ -27,6 +28,13 @@ export function removeIngredientById(id){
     };
 }
 
+export function resetIngredients(){
+    return {
+        type: RESET_INGREDIENTS,
+    };
+}
+
+
 export function setMenu(menu){
     return {
         type: SET_MENU,
@@ -43,7 +51,7 @@ export function menuFetchError(error){
 
 export function fetchMenu(axios){
     return dispatch => {
-        axios.get("/menu/")
+        return axios.get("/menu/")
             .then(res => {
                 const menu = res.data;
                 dispatch(setMenu(menu));

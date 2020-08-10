@@ -3,6 +3,7 @@ export {
     removeLastIngredient,
     removeIngredientById,
     fetchMenu,
+    resetIngredients,
 } from "./actions";
 
 export {

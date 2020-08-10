@@ -4,6 +4,7 @@ import {
     REMOVE_INGREDIENT_BY_ID,
     SET_MENU,
     MENU_FETCH_ERROR,
+    RESET_INGREDIENTS,
 } from "./types";
 
 class Ingredient {
@@ -135,6 +136,27 @@ const onMenuFetchError = (store, action) => {
     }
 };
 
+const resetIngredients = (store) => {
+    const menu = Object.fromEntries(
+        Object.keys(store.menu).map(key => {
+            const count = store.menu[key].canAdd ? 0 : store.menu[key].count;
+            return [key, {...store.menu[key], count, canRemove: false}];
+        })
+    );
+
+    console.log(menu);
+    const price = Object.keys(menu).filter(key => menu[key].count > 0)
+        .map(key => menu[key].price * menu[key].count)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+    return {
+        ...store,
+        menu,
+        ingredients: [],
+        price,
+    };
+};
+
 const initialStore = {
     menu: {},
     ingredients: [],
@@ -154,6 +176,8 @@ const ingredientsReducer = (store = initialStore, action) => {
             return setMenu(store, action);
         case MENU_FETCH_ERROR:
             return onMenuFetchError(store, action);
+        case RESET_INGREDIENTS:
+            return resetIngredients(store);
         default:
             return store;
     }
