@@ -9,7 +9,7 @@ class Layout extends Component {
         nav: [
             {name: "Builder", link: "/", exact: true},
             //{name: "Checkout", link: "/checkout", exact: false},
-            {name: "Orders", link: "/orders", exact: false},
+            {name: "Orders", link: "/orders?page=1", exact: false},
         ],
     };
 

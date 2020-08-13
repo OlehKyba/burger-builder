@@ -2,6 +2,9 @@ import {
     CREATE_ORDER_START,
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_FAIL,
+    READ_ORDERS_START,
+    READ_ORDERS_SUCCESS,
+    READ_ORDERS_FAIL,
 } from "./types";
 
 const createOrderStart = store => {
@@ -43,14 +46,65 @@ const createOrderFail = (store, action) => {
     }
 };
 
+const readOrdersStart = (store, action) => {
+    const {page} = action.payload;
+    return {
+        ...store,
+        loading: {
+            ...store.loading,
+            readOrders: true,
+        },
+        errors: {
+            ...store.errors,
+            readOrders: null,
+        },
+        currentPage: page,
+    };
+};
+
+const readOrdersSuccess = (store, action) => {
+    const {orders, length} = action.payload;
+    const {ordersPerPage} = store;
+    const maxPage = Math.ceil(length / ordersPerPage);
+    return {
+        ...store,
+        loading: {
+            ...store.loading,
+            readOrders: false,
+        },
+        orders,
+        maxPage,
+    }
+};
+
+const readOrdersFail = (store, action) => {
+    const error = action.error;
+    return {
+        ...store,
+        loading: {
+            ...store.loading,
+            readOrders: false,
+        },
+        errors: {
+            ...store.errors,
+            readOrders: error,
+        }
+    }
+};
+
 const initialStore = {
     orders: [],
+    currentPage: 1,
+    ordersPerPage: 5,
+    maxPage: undefined,
     loading: {
         createOrder: false,
+        readOrders: false,
     },
     errors: {
         createOrder: null,
-    }
+        readOrders: null,
+    },
 };
 
 const ordersReducer = (store = initialStore, action) => {
@@ -61,6 +115,12 @@ const ordersReducer = (store = initialStore, action) => {
             return createOrderSuccess(store);
         case CREATE_ORDER_FAIL:
             return createOrderFail(store, action);
+        case READ_ORDERS_START:
+            return readOrdersStart(store, action);
+        case READ_ORDERS_SUCCESS:
+            return readOrdersSuccess(store, action);
+        case READ_ORDERS_FAIL:
+            return readOrdersFail(store, action);
         default:
             return store;
     }

@@ -1,0 +1,35 @@
+.Pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #703b09;
+}
+
+.Pagination span {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: white;
+    float: left;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.Pagination span.Active {
+    background-color: lightskyblue;
+    color: black;
+}
+
+.Pagination span:hover:not(.Active) {
+    background-color: #8f5c2c;
+}
+
+.Disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
