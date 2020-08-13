@@ -5,6 +5,7 @@ import {
     READ_ORDERS_START,
     READ_ORDERS_SUCCESS,
     READ_ORDERS_FAIL,
+    SET_ORDERS_STATUS,
 } from "./types";
 
 import {selectOrdersPerPage} from "./selectors";
@@ -42,10 +43,10 @@ export function createOrder(axios, order){
     };
 }
 
-function readOrdersStart(page){
+function readOrdersStart(page, status){
     return {
         type: READ_ORDERS_START,
-        payload: {page},
+        payload: {page, status},
     };
 }
 
@@ -70,9 +71,14 @@ function readOrdersFail(error) {
 
 export function readOrders(axios, params) {
     return (dispatch, getState) => {
-        const _limit = selectOrdersPerPage(getState());
-        dispatch(readOrdersStart(params.page));
-        return axios.get("/orders/", {params: {...params, _limit, _page: params.page}})
+        const {page, status, ...other} = params;
+        const store = getState();
+        const _limit = selectOrdersPerPage(store);
+        dispatch(readOrdersStart(page));
+        dispatch(setOrdersStatus(status));
+        const searchQueryParams = {...other, _limit, _page: page};
+        if (status) searchQueryParams.status = status;
+        return axios.get("/orders/", {params: searchQueryParams})
             .then(res => {
                 dispatch(readOrdersSuccess(res));
                 //return res;
@@ -83,3 +89,11 @@ export function readOrders(axios, params) {
             });
     };
 }
+
+function setOrdersStatus(status) {
+    return {
+        type: SET_ORDERS_STATUS,
+        payload: {status},
+    }
+}
+

@@ -93,6 +93,7 @@
         "address": "50 лет СССР, Чистякове, Донецька область, Украина, 86600",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 1
     },
     {
@@ -130,6 +131,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 2
     },
     {
@@ -167,6 +169,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 3
     },
     {
@@ -204,6 +207,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 4
     },
     {
@@ -241,6 +245,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 5
     },
     {
@@ -278,6 +283,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 6
     },
     {
@@ -315,6 +321,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 7
     },
     {
@@ -352,6 +359,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "cooking",
       "id": 8
     },
     {
@@ -389,6 +397,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 9
     },
     {
@@ -426,6 +435,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 10
     },
     {
@@ -463,6 +473,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 11
     },
     {
@@ -500,6 +511,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 12
     },
     {
@@ -537,6 +549,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 13
     },
     {
@@ -574,6 +587,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 14
     },
     {
@@ -611,6 +625,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 15
     },
     {
@@ -648,6 +663,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 16
     },
     {
@@ -685,6 +701,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 17
     },
     {
@@ -722,6 +739,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 18
     },
     {
@@ -759,6 +777,7 @@
         "address": "вулиця Євгена Коновальця, 35, Київ, Украина, 02000",
         "deliveryType": "cheapest"
       },
+      "status": "ready",
       "id": 19
     }
   ]

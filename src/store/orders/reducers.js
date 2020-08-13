@@ -5,6 +5,7 @@ import {
     READ_ORDERS_START,
     READ_ORDERS_SUCCESS,
     READ_ORDERS_FAIL,
+    SET_ORDERS_STATUS,
 } from "./types";
 
 const createOrderStart = store => {
@@ -92,9 +93,17 @@ const readOrdersFail = (store, action) => {
     }
 };
 
+const setOrdersStatus = (store, action) => {
+    return {
+        ...store,
+        status: action.payload.status,
+    };
+};
+
 const initialStore = {
     orders: [],
     currentPage: 1,
+    status: '',
     ordersPerPage: 5,
     maxPage: undefined,
     loading: {
@@ -121,6 +130,8 @@ const ordersReducer = (store = initialStore, action) => {
             return readOrdersSuccess(store, action);
         case READ_ORDERS_FAIL:
             return readOrdersFail(store, action);
+        case SET_ORDERS_STATUS:
+            return setOrdersStatus(store, action);
         default:
             return store;
     }

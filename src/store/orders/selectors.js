@@ -30,3 +30,7 @@ export function selectOrdersPerPage(state){
 export function selectCurrentPage(state){
     return state.orders.currentPage;
 }
+
+export function selectStatus(state){
+    return state.orders.status;
+}
