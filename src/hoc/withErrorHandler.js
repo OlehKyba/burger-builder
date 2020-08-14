@@ -14,7 +14,8 @@ const withErrorHandler = (ModalOnError, WrappedComponent, axiosInstance) => {
 
         UNSAFE_componentWillMount() {
             this.reqInterceptor = axiosInstance.interceptors.request.use(req => {
-                this.setState({error: null});
+                if (this.state.error)
+                    this.setState({error: null});
                 return req;
             });
 

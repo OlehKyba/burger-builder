@@ -10,5 +10,6 @@ export {
     selectCurrentPage,
     selectMaxPage,
     isOrdersReading,
-    selectReadOrdersError
+    selectReadOrdersError,
+    selectStatus,
 } from "./selectors";

@@ -11,6 +11,7 @@ import {
     isOrdersReading,
     selectReadOrdersError,
     readOrders,
+    selectStatus,
 } from "../../store/orders";
 
 import classes from "./Orders.module.css";
@@ -24,7 +25,6 @@ import Result from "../../components/UI/Result";
 import Pagination from "../../components/UI/Pagination";
 import Select from "../../components/UI/Select";
 import Option from "../../components/UI/Select/Option";
-import {selectStatus} from "../../store/orders/selectors";
 
 class Orders extends Component {
 
@@ -32,6 +32,7 @@ class Orders extends Component {
         const statusSuffix = this.props.status ? `&status=${this.props.status}` : '';
         this.props.history.push(this.props.match.url + `?page=${page}` + statusSuffix);
     };
+
 
     onStatusFilterChangeHandler = event => {
         const status = event.target.value;
